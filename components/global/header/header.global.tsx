@@ -12,7 +12,7 @@ export default function Header({ header }: Props) {
     <header className="fixed top-5 z-50 w-full">
       <div className="container flex items-center justify-between gap-4">
         <Logo />
-        <div className="rounded-full border p-1">
+        <div className="rounded-full border bg-background p-1">
           <MobileNavHeader header={header} />
           <DesktopNavHeader header={header} />
         </div>

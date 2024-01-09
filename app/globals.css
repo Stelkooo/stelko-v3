@@ -59,4 +59,40 @@
   .container {
     @apply mx-auto max-w-[1920px] px-2 md:px-4 lg:px-6;
   }
+
+  h1,
+  .as-h1 {
+    @apply text-[4.236rem]  md:text-[6.854rem] lg:text-[max(6.854rem,13vw)];
+  }
+  h2,
+  .as-h2 {
+    @apply text-[2.618rem]  md:text-[4.236rem] lg:text-[max(4.236rem,6vw)];
+  }
+  h3,
+  .as-h3 {
+    @apply text-[1.618rem] md:text-[2.618rem] lg:text-[max(2.618rem,4vw)];
+  }
+  h1,
+  .as-h1,
+  h2,
+  .as-h2,
+  h3,
+  .as-h3 {
+    @apply font-medium leading-[1.15] tracking-tighter;
+  }
+
+  p,
+  .as-body {
+    @apply text-[1rem] lg:text-[1.125rem];
+  }
+  small,
+  .as-small {
+    @apply text-[0.875rem] lg:text-[1rem];
+  }
+  p,
+  .as-body,
+  small,
+  .as-small {
+    @apply leading-[1.6] tracking-normal;
+  }
 }

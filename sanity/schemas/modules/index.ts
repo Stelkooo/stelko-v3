@@ -53,6 +53,10 @@ export default defineField({
   group: 'content',
   of: [
     ...modulesArr,
-    defineArrayMember({ type: 'reference', to: [{ type: 'reusableModule' }] }),
+    defineArrayMember({
+      title: 'Reusable Modules',
+      type: 'reference',
+      to: [{ type: 'reusableModule' }],
+    }),
   ],
 });

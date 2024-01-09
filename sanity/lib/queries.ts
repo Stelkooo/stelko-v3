@@ -80,14 +80,10 @@ const modulesQuery = groq`
   _type == "heroModule" => {
     ${moduleBaseQuery},
     heading,
-    subheading,
-    heroType,
-    heroType == 'textAboveImage' => {
-      image {
-        ${imageQuery},
-      },
+    image {
+      ${imageQuery},
     },
-  },
+},
   _type == "layoutModule" => {
     ${moduleBaseQuery},
     layoutType,
