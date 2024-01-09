@@ -78,7 +78,7 @@
   .as-h2,
   h3,
   .as-h3 {
-    @apply font-medium leading-[1.15] tracking-tighter;
+    @apply font-medium leading-[.85] tracking-tighter;
   }
 
   p,

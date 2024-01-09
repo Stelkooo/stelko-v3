@@ -7,7 +7,7 @@ export default function HeroModule({ heading, image }: THeroModule) {
     <section>
       <div
         className={cn({
-          'container relative flex flex-col items-start justify-end py-32':
+          'container relative my-32 flex flex-col items-start justify-end':
             true,
           relative: image,
         })}

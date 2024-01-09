@@ -83,7 +83,7 @@ const modulesQuery = groq`
     image {
       ${imageQuery},
     },
-},
+  },
   _type == "layoutModule" => {
     ${moduleBaseQuery},
     layoutType,
