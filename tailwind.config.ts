@@ -1,6 +1,9 @@
 /* eslint-disable global-require */
 import type { Config } from 'tailwindcss';
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires, import/no-extraneous-dependencies
+const { fontFamily } = require('tailwindcss/defaultTheme');
+
 const config = {
   darkMode: ['class'],
   content: [
@@ -17,6 +20,9 @@ const config = {
       },
     },
     extend: {
+      fontFamily: {
+        sans: ['var(--font-bricolage-grotesque)', ...fontFamily.sans],
+      },
       colors: {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
