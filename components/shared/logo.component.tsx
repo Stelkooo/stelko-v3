@@ -12,12 +12,12 @@ export default function Logo() {
   // Content to show as Logo
   const Content = (
     <div className="flex items-center gap-1">
-      <Image src={Ghost} alt="Stelko's Ghost Logo" className="h-11 w-11" />
       <Image
-        src={Stelko}
-        alt="Stelko's Typeface Logo"
-        className="h-11 w-40 max-[456px]:hidden"
+        src={Ghost}
+        alt="Stelko's Ghost Logo"
+        className="hidden h-11 w-11"
       />
+      <Image src={Stelko} alt="Stelko's Typeface Logo" className="h-11 w-40 " />
     </div>
   );
 

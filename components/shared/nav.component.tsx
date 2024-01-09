@@ -16,12 +16,16 @@ type Props = { navLinks?: TNavLink[]; isVertical?: boolean };
 export default function Nav({ navLinks, isVertical = false }: Props) {
   return navLinks ? (
     <NavigationMenu>
-      <NavigationMenuList className={cn({ 'flex-col space-x-0': isVertical })}>
+      <NavigationMenuList
+        className={cn({ 'flex-col gap-4 space-x-0': isVertical })}
+      >
         {navLinks.map((navLink) => (
           <NavigationMenuItem key={navLink?._key}>
             <SiteLink link={navLink?.link} legacyBehaviour passHref>
               <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                {navLink?.title}
+                <span className={cn({ 'text-4xl': isVertical })}>
+                  {navLink?.title}
+                </span>
               </NavigationMenuLink>
             </SiteLink>
           </NavigationMenuItem>

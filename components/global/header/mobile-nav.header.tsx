@@ -14,7 +14,7 @@ export default function MobileNavHeader({ header }: Props) {
   return (
     <div className="md:hidden">
       <Sheet>
-        <div className="flex items-center justify-between gap-4">
+        <div className="flex items-center justify-between gap-2">
           {header?.cta ? (
             <Button className="w-full" asChild>
               <SiteLink link={header?.cta?.link}>
