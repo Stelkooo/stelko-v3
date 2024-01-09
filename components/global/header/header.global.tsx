@@ -9,11 +9,13 @@ type Props = {
 
 export default function Header({ header }: Props) {
   return (
-    <header className="fixed z-50 w-full border-b bg-background">
-      <div className="container flex items-center justify-between py-5">
+    <header className="fixed top-5 z-50 w-full">
+      <div className="container flex items-center justify-between">
         <Logo />
-        <MobileNavHeader header={header} />
-        <DesktopNavHeader header={header} />
+        <div className="rounded-full border p-1">
+          <MobileNavHeader header={header} />
+          <DesktopNavHeader header={header} />
+        </div>
       </div>
     </header>
   );

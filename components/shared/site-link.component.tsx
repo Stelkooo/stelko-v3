@@ -2,13 +2,14 @@ import Link from 'next/link';
 
 import { TLink } from '@/types';
 import resolveHref from '@/sanity/lib/links';
-import { cn } from '@/lib/utils';
 
 type Props = {
   link?: TLink;
   children: React.ReactNode;
   onClick?: () => void;
   className?: string;
+  passHref?: boolean;
+  legacyBehaviour?: boolean;
 };
 
 export default function SiteLink({
@@ -16,6 +17,8 @@ export default function SiteLink({
   children,
   onClick,
   className = '',
+  legacyBehaviour = false,
+  passHref = false,
 }: Props) {
   const target = link?.openNewWindow ? '_blank' : undefined;
 
@@ -26,7 +29,9 @@ export default function SiteLink({
           href={link.external || '/'}
           target={target}
           onClick={onClick}
-          className={cn('font-medium lg:hover:underline', className)}
+          className={className}
+          legacyBehavior={legacyBehaviour}
+          passHref={passHref}
         >
           {children}
         </Link>
@@ -40,14 +45,22 @@ export default function SiteLink({
           )}`}
           onClick={onClick}
           target={target}
-          className={cn('font-medium lg:hover:underline', className)}
+          className={className}
+          legacyBehavior={legacyBehaviour}
+          passHref={passHref}
         >
           {children}
         </Link>
       );
     default:
       return (
-        <Link href="/" onClick={onClick} className={className}>
+        <Link
+          href="/"
+          onClick={onClick}
+          className={className}
+          legacyBehavior={legacyBehaviour}
+          passHref={passHref}
+        >
           {children}
         </Link>
       );

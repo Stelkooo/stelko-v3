@@ -16,7 +16,7 @@ export default function MobileNavHeader({ header }: Props) {
       <Sheet>
         <div className="flex items-center justify-between gap-4">
           {header?.cta ? (
-            <Button className="w-full max-sm:hidden" asChild>
+            <Button className="w-full" asChild>
               <SiteLink link={header?.cta?.link}>
                 {header?.cta?.title || ''}
               </SiteLink>
@@ -24,8 +24,8 @@ export default function MobileNavHeader({ header }: Props) {
           ) : null}
           <Button
             type="button"
-            variant="outline"
             size="icon"
+            variant="outline"
             className="flex-shrink-0"
             asChild
           >
@@ -36,20 +36,7 @@ export default function MobileNavHeader({ header }: Props) {
           </Button>
         </div>
         <SheetContent>
-          <nav>
-            <ul className="as-h1 mt-16 space-y-4 font-medium">
-              <Nav navLinks={header?.navLinks} />
-              {header?.cta ? (
-                <li className="sm:hidden">
-                  <Button className="w-full" asChild>
-                    <SiteLink link={header?.cta?.link}>
-                      {header?.cta?.title || ''}
-                    </SiteLink>
-                  </Button>
-                </li>
-              ) : null}
-            </ul>
-          </nav>
+          <Nav navLinks={header?.navLinks} isVertical />
         </SheetContent>
       </Sheet>
     </div>
