@@ -139,6 +139,26 @@ export type TImageModule = TBaseModule & {
   images?: TImage[];
 };
 
+export type TTag = {
+  _id?: string;
+  name?: string;
+};
+
+export type TProject = {
+  _key?: string;
+  _id?: string;
+  slug?: Slug;
+  thumbnail?: TImage;
+  modules?: TModules;
+  title?: string;
+  tags?: TTag[];
+};
+
+export type TProjectModule = TBaseModule & {
+  heading?: string;
+  projects?: TProject[];
+};
+
 export type TModules = (
   | THeroModule
   | TLayoutModule

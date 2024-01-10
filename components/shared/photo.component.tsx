@@ -7,6 +7,7 @@ import Image from 'next/image';
 import { TImage } from '@/types';
 
 import { apiVersion, dataset, projectId, useCdn } from '@/sanity/env';
+import { cn } from '@/lib/utils';
 
 const client = createClient({
   apiVersion,
@@ -39,7 +40,7 @@ export default function Photo({
       height={fill ? undefined : imageProps.height}
       placeholder="blur"
       blurDataURL={image.asset.metadata.lqip}
-      className={className}
+      className={cn('', className)}
       sizes={image.sizes || sizes}
       alt={image.alt || ''}
       loading={loading}

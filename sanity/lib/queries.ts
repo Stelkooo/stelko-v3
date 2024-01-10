@@ -176,6 +176,22 @@ const modulesQuery = groq`
         ${imageQuery},
       },
     },
+  },
+  _type == 'projectModule' => {
+    ${moduleBaseQuery},
+    heading,
+    projects[]-> {
+      _id,
+      thumbnail {
+        ${imageQuery},
+      },
+      title,
+      slug,
+      tags[]-> {
+        _id,
+        name,
+      },
+    },
   }
 `;
 

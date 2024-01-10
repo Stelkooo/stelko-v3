@@ -4,6 +4,7 @@ import {
   THeroModule,
   TImageModule,
   TLayoutModule,
+  TProjectModule,
   TTestimonialModule,
 } from '@/types';
 
@@ -13,6 +14,7 @@ import CtaModule from './cta/cta.module';
 import LayoutModule from './layout/layout.module';
 import TestimonialModule from './testimonial/testimonial.module';
 import FaqModule from './faq/faq.module';
+import ProjectModule from './project/project.module';
 
 const ModulesMap = {
   heroModule: HeroModule,
@@ -21,6 +23,7 @@ const ModulesMap = {
   layoutModule: LayoutModule,
   testimonialModule: TestimonialModule,
   faqModule: FaqModule,
+  projectModule: ProjectModule,
 };
 
 type Props =
@@ -29,7 +32,8 @@ type Props =
   | TCtaModule
   | TLayoutModule
   | TTestimonialModule
-  | TFaqModule;
+  | TFaqModule
+  | TProjectModule;
 
 export default function ModuleBuilder({ ...props }: Props) {
   if (!props._type) throw new Error('Object does not have a "_type" property');

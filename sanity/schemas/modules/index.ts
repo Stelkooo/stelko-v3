@@ -1,4 +1,5 @@
 import {
+  AppWindow,
   HelpCircle,
   Image,
   Layout,
@@ -17,6 +18,7 @@ const moduleNames = [
   'testimonialModule',
   'ctaModule',
   'imageModule',
+  'projectModule',
 ] as const;
 
 type TModuleNames = (typeof moduleNames)[number];
@@ -42,6 +44,8 @@ export function getModuleInfo(module: TModuleNames): {
       return { subtitle: 'CTA', media: Phone };
     case 'imageModule':
       return { subtitle: 'Image', media: Image };
+    case 'projectModule':
+      return { subtitle: 'Project/s', media: AppWindow };
     default:
       return { subtitle: 'Invalid Module', media: X };
   }

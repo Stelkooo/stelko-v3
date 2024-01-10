@@ -1,4 +1,4 @@
-import { defineField, defineType } from 'sanity';
+import { defineArrayMember, defineField, defineType } from 'sanity';
 
 import { pageGroups } from '../constants';
 import slug from '../objects/slug';
@@ -18,6 +18,13 @@ export default defineType({
     defineField({
       name: 'thumbnail',
       type: 'customImage',
+      group: 'content',
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: 'tags',
+      type: 'array',
+      of: [defineArrayMember({ type: 'reference', to: [{ type: 'tag' }] })],
       group: 'content',
       validation: (rule) => rule.required(),
     }),

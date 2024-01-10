@@ -19,6 +19,7 @@ import faqModule from './modules/faq-module';
 import heroModule from './modules/hero-module';
 import imageModule from './modules/image-module';
 import layoutModule from './modules/layout-module';
+import projectModule from './modules/project-module';
 import testimonialModule from './modules/testimonial-module';
 
 // Objects import
@@ -48,6 +49,7 @@ const modules = [
   heroModule,
   imageModule,
   layoutModule,
+  projectModule,
   testimonialModule,
 ];
 
