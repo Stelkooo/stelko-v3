@@ -72,18 +72,24 @@
   .as-h3 {
     @apply text-[1.618rem] md:text-[2.618rem] lg:text-[max(2.618rem,4vw)];
   }
+  h4,
+  .as-h4 {
+    @apply text-[1.2rem] md:text-[1.618rem] lg:text-[max(1.618rem,2vw)];
+  }
   h1,
   .as-h1,
   h2,
   .as-h2,
   h3,
-  .as-h3 {
+  .as-h3,
+  h4,
+  .as-h4 {
     @apply font-medium leading-[.85] tracking-tighter;
   }
 
   p,
   .as-body {
-    @apply text-[1rem] lg:text-[1.125rem];
+    @apply text-[1rem] md:text-[1.125rem] lg:text-[max(1.125rem,1.2vw)];
   }
   small,
   .as-small {
