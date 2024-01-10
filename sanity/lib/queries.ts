@@ -88,7 +88,6 @@ const modulesQuery = groq`
     ${moduleBaseQuery},
     layoutType,
     heading,
-    subheading,
     layoutType == "twoColumnCards" => {
       twoColumnCards[] {
         _key,
@@ -113,26 +112,11 @@ const modulesQuery = groq`
         imageOnLeft,
       },
     },
-    layoutType == "oneImageTwoTextCards" => {
-      oneImageTwoTextCards {
-        imageCard {
-          image {
-            ${imageQuery},
-          },
-          heading,
-          text,
-          cta {
-            ${navLinkQuery},
-          },
-        },
-        textCards[] {
-          _key,
-          heading,
-          text,
-          cta {
-            ${navLinkQuery},
-          },
-        },
+    layoutType == "headingTextCard" => {
+      headingTextCard {
+        heading,
+        text,
+        textOnLeft,
       },
     },
   },

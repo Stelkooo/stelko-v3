@@ -109,10 +109,6 @@ export default defineField({
           rows: 3,
         }),
         defineField({
-          name: 'image',
-          type: 'customImage',
-        }),
-        defineField({
           title: 'Text on left?',
           name: 'textOnLeft',
           type: 'boolean',

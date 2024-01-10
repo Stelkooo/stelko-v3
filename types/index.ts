@@ -82,12 +82,16 @@ export type TCard = {
 };
 
 export type TLayoutModule = TBaseModule & {
-  layoutType?: 'twoColumnCards' | 'threeColumnCards' | 'imageTextCard';
+  layoutType?:
+    | 'twoColumnCards'
+    | 'threeColumnCards'
+    | 'imageTextCard'
+    | 'headingTextCard';
   heading?: string;
-  subheading?: string;
   twoColumnCards?: TCard[];
   threeColumnCards?: TCard[];
   imageTextCard?: TCard & { imageOnLeft?: boolean };
+  headingTextCard?: TCard & { textOnLeft?: boolean };
 };
 
 export type TFaq = {
