@@ -26,12 +26,6 @@ export default defineField({
       hidden: ({ parent }) => parent?.testimonialType !== 'double',
     }),
     defineField({
-      name: 'text',
-      type: 'text',
-      rows: 3,
-      hidden: ({ parent }) => parent?.testimonialType !== 'double',
-    }),
-    defineField({
       name: 'testimonial',
       type: 'reference',
       to: [{ type: 'testimonial' }],
@@ -44,6 +38,12 @@ export default defineField({
         defineArrayMember({ type: 'reference', to: [{ type: 'testimonial' }] }),
       ],
       hidden: ({ parent }) => parent?.testimonialType !== 'double',
+    }),
+    defineField({
+      title: 'Link to all testimonials?',
+      name: 'linkToAllTestimonials',
+      type: 'boolean',
+      initialValue: false,
     }),
   ],
   initialValue: {

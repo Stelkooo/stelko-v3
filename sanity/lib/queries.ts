@@ -136,14 +136,14 @@ const modulesQuery = groq`
   _type == "testimonialModule" => {
     ${moduleBaseQuery},
     testimonialType,
+    linkToAllTestimonials,
     testimonialType == 'single' => {
       testimonial-> {
         ${testimonialQuery},
       },
     },
-    testimonialType == 'multiple' => {
+    testimonialType == 'double' => {
       heading,
-      text,
       testimonials[]-> {
         ${testimonialQuery},
       },

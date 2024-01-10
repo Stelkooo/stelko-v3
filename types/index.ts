@@ -115,7 +115,7 @@ export type TTestimonial = {
 
 export type TTestimonialModule = TBaseModule & {
   heading?: string;
-  text?: string;
+  linkToAllTestimonials?: boolean;
   testimonial?: TTestimonial;
   testimonials?: TTestimonial[];
   testimonialType?: 'single' | 'double';
