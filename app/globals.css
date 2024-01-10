@@ -74,16 +74,14 @@
   }
   h4,
   .as-h4 {
-    @apply text-[1.2rem] md:text-[1.618rem] lg:text-[max(1.618rem,2vw)];
+    @apply text-[1.2rem] leading-tight md:text-[1.618rem] lg:text-[max(1.618rem,2vw)];
   }
   h1,
   .as-h1,
   h2,
   .as-h2,
   h3,
-  .as-h3,
-  h4,
-  .as-h4 {
+  .as-h3 {
     @apply font-medium leading-[.85] tracking-tighter;
   }
 

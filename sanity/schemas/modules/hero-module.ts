@@ -16,6 +16,11 @@ export default defineField({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      name: 'subheading',
+      type: 'text',
+      rows: 3,
+    }),
+    defineField({
       name: 'image',
       type: 'customImage',
     }),

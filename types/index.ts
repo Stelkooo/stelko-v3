@@ -70,6 +70,7 @@ export type TBaseModule = {
 
 export type THeroModule = TBaseModule & {
   heading?: string;
+  subheading?: string;
   image?: TImage;
 };
 
