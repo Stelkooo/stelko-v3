@@ -27,6 +27,7 @@ export default function ProjectModule({ heading, projects }: TProjectModule) {
                         <Photo
                           image={project.thumbnail}
                           className="transition-transform group-hover/project:scale-110"
+                          sizes="(min-width: 2040px) 926px, (min-width: 1040px) 44.9vw, 97.78vw"
                         />
                       </figure>
                     ) : null}

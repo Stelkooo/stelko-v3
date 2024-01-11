@@ -46,6 +46,7 @@ export default function Photo({
       loading={loading}
       fill={fill}
       itemProp="image"
+      quality={90}
     />
   );
 }

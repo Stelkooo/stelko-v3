@@ -12,7 +12,7 @@ export default function Testimonial({ testimonial }: Props) {
         <p>{testimonial?.testimonial || ''}</p>
       </CardContent>
       <CardFooter>
-        <p className="as-small font-medium">{testimonial?.name || ''}</p>
+        <p className="font-medium">{testimonial?.name || ''}</p>
       </CardFooter>
     </Card>
   );

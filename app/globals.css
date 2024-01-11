@@ -70,11 +70,11 @@
   }
   h3,
   .as-h3 {
-    @apply text-[1.618rem] md:text-[2.618rem] lg:text-[max(2.618rem,4vw)];
+    @apply text-[1.618rem] md:text-[2.618rem] lg:text-[max(2.618rem,3vw)];
   }
   h4,
   .as-h4 {
-    @apply text-[1.2rem] leading-tight md:text-[1.618rem] lg:text-[max(1.618rem,2vw)];
+    @apply text-[1.2rem] leading-tight md:text-[1.618rem] lg:text-[max(1.618rem,1.5vw)];
   }
   h1,
   .as-h1,

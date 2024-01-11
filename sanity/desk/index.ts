@@ -3,6 +3,7 @@ import { ListItemBuilder, StructureResolver } from 'sanity/desk';
 import pagesStructure from './pages-structure';
 import blogStructure from './blog-structure';
 import tagStructure from './tag-structure';
+import techStructure from './tech-structure';
 import projectStructure from './project-structure';
 import testimonialStructure from './testimonial-structure';
 import reusableModulesStructure from './reusable-modules-structure';
@@ -23,6 +24,7 @@ const hiddenDocTypes = (listItem: ListItemBuilder) => {
     'project',
     'reusableModule',
     'tag',
+    'tech',
     'testimonial',
   ].includes(id);
 };
@@ -36,7 +38,9 @@ const structure: StructureResolver = (S, context) =>
       reusableModulesStructure(S, context),
       S.divider(),
       blogStructure(S, context),
+      S.divider(),
       tagStructure(S, context),
+      techStructure(S, context),
       S.divider(),
       projectStructure(S, context),
       testimonialStructure(S, context),

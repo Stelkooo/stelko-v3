@@ -15,7 +15,7 @@ export default function TestimonialModule({
         <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
           {heading ? <h2>{heading}</h2> : null}
           {linkToAllTestimonials ? (
-            <Button variant="outline" asChild>
+            <Button asChild>
               <SiteLink
                 link={{
                   linkType: 'internal',

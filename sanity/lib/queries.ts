@@ -192,13 +192,35 @@ const modulesQuery = groq`
         name,
       },
     },
+  },
+  _type == 'techStackModule' => {
+    ${moduleBaseQuery},
+    tech[]-> {
+      _id,
+      name,
+      image {
+        ${imageQuery},
+      },
+      category,
+    },
+  }
+`;
+
+const fullModuleQuery = groq`
+  defined(_ref) => {
+    ...@->modules[0] {
+      ${modulesQuery},
+    },
+  },
+  !defined(_ref) => {
+    ${modulesQuery}
   }
 `;
 
 export const homeQuery = groq`
   *[_type == "home" && _id == "home"][0] {
     modules[] {
-      ${modulesQuery},
+      ${fullModuleQuery},
     },
   }
 `;

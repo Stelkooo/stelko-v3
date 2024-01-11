@@ -10,6 +10,7 @@ import page from './documents/page';
 import project from './documents/project';
 import reusableModules from './documents/reusable-modules';
 import tags from './documents/tags';
+import tech from './documents/tech';
 import testimonial from './documents/testimonial';
 
 // Modules import
@@ -20,6 +21,7 @@ import heroModule from './modules/hero-module';
 import imageModule from './modules/image-module';
 import layoutModule from './modules/layout-module';
 import projectModule from './modules/project-module';
+import techStackModule from './modules/tech-stack-module';
 import testimonialModule from './modules/testimonial-module';
 
 // Objects import
@@ -39,6 +41,7 @@ const documents = [
   project,
   reusableModules,
   tags,
+  tech,
   testimonial,
 ];
 
@@ -50,6 +53,7 @@ const modules = [
   imageModule,
   layoutModule,
   projectModule,
+  techStackModule,
   testimonialModule,
 ];
 

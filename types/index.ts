@@ -159,6 +159,25 @@ export type TProjectModule = TBaseModule & {
   projects?: TProject[];
 };
 
+export type TCategoryValues =
+  | 'frontendDevelopment'
+  | 'cms'
+  | 'deploymentAndVersionControl'
+  | 'design'
+  | 'developmentTools'
+  | 'communicationAndProjectManagement';
+
+export type TTech = {
+  _id?: string;
+  category?: TCategoryValues;
+  name?: string;
+  image?: TImage;
+};
+
+export type TTechStackModule = TBaseModule & {
+  tech?: TTech[];
+};
+
 export type TModules = (
   | THeroModule
   | TLayoutModule
@@ -166,6 +185,8 @@ export type TModules = (
   | TTestimonialModule
   | TCtaModule
   | TImageModule
+  | TProjectModule
+  | TTechStackModule
 )[];
 
 export type THome = {

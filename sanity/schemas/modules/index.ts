@@ -1,5 +1,6 @@
 import {
   AppWindow,
+  Cpu,
   HelpCircle,
   Image,
   Layout,
@@ -19,6 +20,7 @@ const moduleNames = [
   'ctaModule',
   'imageModule',
   'projectModule',
+  'techStackModule',
 ] as const;
 
 type TModuleNames = (typeof moduleNames)[number];
@@ -46,6 +48,8 @@ export function getModuleInfo(module: TModuleNames): {
       return { subtitle: 'Image', media: Image };
     case 'projectModule':
       return { subtitle: 'Project/s', media: AppWindow };
+    case 'techStackModule':
+      return { subtitle: 'Tech stack', media: Cpu };
     default:
       return { subtitle: 'Invalid Module', media: X };
   }
