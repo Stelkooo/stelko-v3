@@ -25,7 +25,7 @@ export default function MobileNavHeader({ header }: Props) {
           <Button
             type="button"
             size="icon"
-            variant="outline"
+            variant="ghost"
             className="flex-shrink-0"
             asChild
           >

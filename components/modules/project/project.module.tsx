@@ -15,9 +15,9 @@ export default function ProjectModule({ heading, projects }: TProjectModule) {
             {projects.map((project) => (
               <li key={project._id}>
                 <Link href={`${resolveHref('project', project.slug?.current)}`}>
-                  <div className="group/project grid gap-4 border-t py-4 lg:grid-cols-2">
+                  <div className="group/project grid gap-y-8 border-t py-4 lg:grid-cols-2">
                     <div className="space-y-4">
-                      <h3 className="group-hover/project:underline">
+                      <h3 className="group-hover/project:underline lg:pr-8">
                         {project.title}
                       </h3>
                       <Tags tags={project?.tags} />

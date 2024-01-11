@@ -12,11 +12,11 @@ export default function ColumnLayout({
 }: Props) {
   return (
     <section>
-      <div className="container my-20 space-y-2">
+      <div className="container my-20 space-y-8">
         {heading ? <h2>{heading}</h2> : null}{' '}
         <div
           className={cn({
-            'grid gap-8': true,
+            'grid gap-4 md:gap-8': true,
             'md:grid-cols-2': columnNumber === 2,
             'md:grid-cols-2 lg:grid-cols-3': columnNumber === 3,
           })}

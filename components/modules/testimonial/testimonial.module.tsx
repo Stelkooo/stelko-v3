@@ -11,26 +11,9 @@ export default function TestimonialModule({
 }: TTestimonialModule) {
   return (
     <section>
-      <div className="container my-20 space-y-8">
-        <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
-          {heading ? <h2>{heading}</h2> : null}
-          {linkToAllTestimonials ? (
-            <Button asChild>
-              <SiteLink
-                link={{
-                  linkType: 'internal',
-                  internal: {
-                    _type: 'page',
-                    slug: { _type: 'slug', current: 'testimonials' },
-                  },
-                }}
-              >
-                View all testimonials
-              </SiteLink>
-            </Button>
-          ) : null}
-        </div>
-        <div className="grid gap-8 md:grid-cols-2">
+      <div className="container my-20 grid gap-y-8">
+        {heading ? <h2>{heading}</h2> : null}
+        <div className="grid gap-4 md:grid-cols-2 md:gap-8">
           {testimonial ? (
             <div className="md:col-start-2">
               <Testimonial testimonial={testimonial} />
@@ -42,6 +25,21 @@ export default function TestimonialModule({
               ))
             : null}
         </div>
+        {linkToAllTestimonials ? (
+          <Button asChild className="justify-self-end">
+            <SiteLink
+              link={{
+                linkType: 'internal',
+                internal: {
+                  _type: 'page',
+                  slug: { _type: 'slug', current: 'testimonials' },
+                },
+              }}
+            >
+              View all testimonials
+            </SiteLink>
+          </Button>
+        ) : null}
       </div>
     </section>
   );

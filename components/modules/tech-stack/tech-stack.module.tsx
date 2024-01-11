@@ -10,14 +10,14 @@ export default function TechStackModule({ tech }: TTechStackModule) {
       <div className="container my-20 space-y-8">
         <h2>Tech stack</h2>
         <div>
-          <ul className="grid space-y-8">
+          <ul className="grid gap-4">
             {techCategories.map((category) => (
               <li
                 key={category?.value}
-                className="grid gap-8 border-t py-4 md:grid-cols-2"
+                className="grid gap-y-8 rounded-sm border bg-card px-6 py-8 md:grid-cols-2"
               >
-                <h3>{category?.title}</h3>
-                <ul className="flex flex-wrap items-center gap-6">
+                <h3 className="md:pr-8">{category?.title}</h3>
+                <ul className="flex flex-wrap items-center gap-x-20 gap-y-6">
                   {tech.map((item) => {
                     if (item?.category === category?.value) {
                       return (

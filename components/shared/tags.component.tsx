@@ -7,7 +7,7 @@ export default function Tags({ tags }: Props) {
   if (!tags) return null;
 
   return (
-    <ul className="flex flex-wrap gap-1">
+    <ul className="flex flex-wrap gap-2">
       {tags
         ? tags.map((tag) => (
             <li key={tag._id}>
