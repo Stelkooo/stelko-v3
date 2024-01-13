@@ -1,4 +1,5 @@
 import Photo from '@/components/shared/photo.component';
+import Tags from '@/components/shared/tags.component';
 import { cn } from '@/lib/utils';
 import { THeroModule } from '@/types';
 
@@ -6,12 +7,13 @@ export default function HeroModule({
   heading,
   image,
   subheading,
+  tags,
 }: THeroModule) {
   return (
     <section>
       <div
         className={cn({
-          'container relative my-32 flex flex-col items-start justify-end space-y-8':
+          'container relative flex flex-col items-start justify-end space-y-8 py-32':
             true,
           relative: image,
         })}
@@ -23,6 +25,7 @@ export default function HeroModule({
         {subheading ? (
           <p className="as-h4 sm:max-w-[60%]">{subheading}</p>
         ) : null}
+        {tags ? <Tags tags={tags} /> : null}
       </div>
     </section>
   );

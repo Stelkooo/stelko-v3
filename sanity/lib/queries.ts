@@ -155,11 +155,15 @@ const modulesQuery = groq`
     heading,
     text,
     ctas {
-      primaryCta {
-        ${navLinkQuery},
+      defined(primaryCta.title) => {
+        primaryCta {
+          ${navLinkQuery},
+        },
       },
-      secondaryCta {
-        ${navLinkQuery},
+      defined(secondaryCta.title) => {
+        secondaryCta {
+          ${navLinkQuery},
+        },
       },
     },
   },
@@ -236,5 +240,37 @@ export const homeSitemapQuery = groq`
   *[_type == "home" && _id == "home"][0] {
     _type,
     _updatedAt,
+  }
+`;
+
+export const projectQuery = groq`
+  *[_type == "project" && defined(slug) && slug.current == $slug][0] {
+    slug,
+    title,
+    thumbnail {
+      ${imageQuery},
+    },
+    tags[]-> {
+      _id,
+      name,
+    },
+    modules[] {
+      ${fullModuleQuery},
+    },
+    tech[]-> {
+      _id,
+      name,
+      image {
+        ${imageQuery},
+      },
+      category,
+    },
+  }
+`;
+
+export const projectSeoQuery = groq`
+  *[_type == "project" && defined(slug) && slug.current == $slug][0] {
+    seoAndSocial,
+    publishStatus,
   }
 `;

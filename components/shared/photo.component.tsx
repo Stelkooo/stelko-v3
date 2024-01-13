@@ -40,7 +40,7 @@ export default function Photo({
       height={fill ? undefined : imageProps.height}
       placeholder="blur"
       blurDataURL={image.asset.metadata.lqip}
-      className={cn('', className)}
+      className={cn('rounded-sm border', className)}
       sizes={image.sizes || sizes}
       alt={image.alt || ''}
       loading={loading}

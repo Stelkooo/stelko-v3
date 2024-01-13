@@ -72,6 +72,7 @@ export type THeroModule = TBaseModule & {
   heading?: string;
   subheading?: string;
   image?: TImage;
+  tags?: TTag[];
 };
 
 export type TCard = {
@@ -152,6 +153,7 @@ export type TProject = {
   modules?: TModules;
   title?: string;
   tags?: TTag[];
+  tech?: TTech[];
 };
 
 export type TProjectModule = TBaseModule & {

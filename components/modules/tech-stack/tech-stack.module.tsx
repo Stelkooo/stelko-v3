@@ -5,13 +5,17 @@ import { TTechStackModule } from '@/types';
 export default function TechStackModule({ tech }: TTechStackModule) {
   if (!tech) return null;
 
+  const techCategoriesFilters = techCategories.filter((value) =>
+    tech.some((item) => item.category === value.value)
+  );
+
   return (
     <section>
       <div className="container my-20 space-y-8">
         <h2>Tech stack</h2>
         <div>
           <ul className="grid gap-4">
-            {techCategories.map((category) => (
+            {techCategoriesFilters.map((category) => (
               <li
                 key={category?.value}
                 className="grid gap-y-8 rounded-sm border bg-card px-6 py-8 md:grid-cols-2"
@@ -25,7 +29,7 @@ export default function TechStackModule({ tech }: TTechStackModule) {
                           {item?.image ? (
                             <Photo
                               image={item.image}
-                              className="max-h-8 w-auto"
+                              className="max-h-8 w-auto rounded-none border-0"
                               sizes="32px"
                             />
                           ) : null}

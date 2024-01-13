@@ -1,4 +1,4 @@
-import { defineField } from 'sanity';
+import { defineArrayMember, defineField } from 'sanity';
 import { getModuleInfo } from '.';
 
 const NAME = 'heroModule';
@@ -19,6 +19,11 @@ export default defineField({
       name: 'subheading',
       type: 'text',
       rows: 3,
+    }),
+    defineField({
+      name: 'tags',
+      type: 'array',
+      of: [defineArrayMember({ type: 'reference', to: [{ type: 'tag' }] })],
     }),
     defineField({
       name: 'image',
