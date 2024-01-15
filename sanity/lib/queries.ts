@@ -44,6 +44,7 @@ const footerQuery = groq`
       ${navLinkQuery},
     },
     "socials": *[_type == "general"][0].socials,
+    "email": *[_type == "general"][0].contactInfo.email,
   }
 `;
 

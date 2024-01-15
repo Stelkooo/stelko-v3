@@ -33,6 +33,7 @@ export type TFooter = {
   navLinks?: TNavLink[];
   policies?: TNavLink[];
   socials?: TSocials;
+  email?: string;
 };
 
 export type TSite = {
