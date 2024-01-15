@@ -17,7 +17,7 @@ export default defineField({
       type: 'string',
       options: {
         layout: 'radio',
-        list: ['single', 'double'],
+        list: ['single', 'double', 'all'],
       },
     }),
     defineField({

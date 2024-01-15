@@ -11,15 +11,16 @@ export default function ProjectModule({ heading, projects }: TProjectModule) {
       <div className="container my-20 space-y-8">
         {heading ? <h2>{heading}</h2> : null}
         {projects ? (
-          <ul>
+          <ul className="space-y-16">
             {projects.map((project) => (
               <li key={project._id}>
                 <Link href={`${resolveHref('project', project.slug?.current)}`}>
                   <div className="group/project grid gap-y-8 border-t py-4 lg:grid-cols-2">
-                    <div className="space-y-4">
-                      <h3 className="group-hover/project:underline lg:pr-8">
-                        {project.title}
+                    <div className="space-y-4 lg:pr-8">
+                      <h3 className="group-hover/project:underline">
+                        {project?.title}
                       </h3>
+                      <p>{project?.description}</p>
                       <Tags tags={project?.tags} />
                     </div>
                     {project?.thumbnail ? (

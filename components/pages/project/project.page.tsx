@@ -9,6 +9,7 @@ export default function ProjectPage({ project }: Props) {
     <>
       <HeroModule
         heading={project?.title}
+        subheading={project?.description}
         image={project?.thumbnail}
         tags={project?.tags}
       />

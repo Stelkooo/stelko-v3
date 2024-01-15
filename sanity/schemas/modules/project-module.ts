@@ -11,17 +11,25 @@ export default defineField({
   type: 'object',
   fields: [
     defineField({
+      title: 'Project type?',
+      name: 'projectType',
+      type: 'string',
+      options: { layout: 'radio', list: ['all', 'some'] },
+    }),
+    defineField({
       name: 'heading',
       type: 'string',
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: 'projects',
       type: 'array',
       of: [defineArrayMember({ type: 'reference', to: [{ type: 'project' }] })],
-      validation: (rule) => rule.required(),
+      hidden: ({ parent }) => parent?.projectType !== 'some',
     }),
   ],
+  initialValue: {
+    projectType: 'some',
+  },
   preview: {
     select: {
       heading: 'heading',

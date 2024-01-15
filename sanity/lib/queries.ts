@@ -76,6 +76,20 @@ const testimonialQuery = groq`
   testimonial
 `;
 
+const projectModuleQuery = groq`
+  _id,
+  thumbnail {
+    ${imageQuery},
+  },
+  title,
+  slug,
+  description,
+  tags[]-> {
+    _id,
+    name,
+  }
+`;
+
 const modulesQuery = groq`
   _type == "heroModule" => {
     ${moduleBaseQuery},
@@ -149,6 +163,11 @@ const modulesQuery = groq`
         ${testimonialQuery},
       },
     },
+    testimonialType == 'all' => {
+      "testimonials": *[_type == 'testimonial'] {
+        ${testimonialQuery},
+      },
+    },
   },
   _type == "ctaModule" => {
     ${moduleBaseQuery},
@@ -184,16 +203,14 @@ const modulesQuery = groq`
   _type == 'projectModule' => {
     ${moduleBaseQuery},
     heading,
-    projects[]-> {
-      _id,
-      thumbnail {
-        ${imageQuery},
+    projectType == 'some' => {
+      projects[]-> {
+        ${projectModuleQuery},
       },
-      title,
-      slug,
-      tags[]-> {
-        _id,
-        name,
+    },
+    projectType == 'all' => {
+      "projects": *[_type == 'project' && defined(slug)] {
+        ${projectModuleQuery},
       },
     },
   },
@@ -247,6 +264,7 @@ export const projectQuery = groq`
   *[_type == "project" && defined(slug) && slug.current == $slug][0] {
     slug,
     title,
+    description,
     thumbnail {
       ${imageQuery},
     },
@@ -270,6 +288,22 @@ export const projectQuery = groq`
 
 export const projectSeoQuery = groq`
   *[_type == "project" && defined(slug) && slug.current == $slug][0] {
+    seoAndSocial,
+    publishStatus,
+  }
+`;
+
+export const pageQuery = groq`
+  *[_type == 'page' && defined(slug) && slug.current == $slug][0] {
+    slug,
+    modules[] {
+      ${fullModuleQuery},
+    },
+  }
+`;
+
+export const pageSeoQuery = groq`
+  *[_type == "page" && defined(slug) && slug.current == $slug][0] {
     seoAndSocial,
     publishStatus,
   }

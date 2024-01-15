@@ -4,7 +4,7 @@ import { TImageModule } from '@/types';
 export default function SingleImage({ image }: TImageModule) {
   return (
     <section>
-      <div className="container my-10">
+      <div className="container my-20">
         <figure>
           {image ? <Photo image={image} /> : null}
           {image?.caption ? (

@@ -4,7 +4,7 @@ import { TImageModule } from '@/types';
 export default function DoubleImage({ images }: TImageModule) {
   return (
     <section>
-      <div className="container my-10 grid gap-4 sm:grid-cols-2">
+      <div className="container my-20 grid gap-4 sm:grid-cols-2">
         {images
           ? images.map((image) =>
               image ? (

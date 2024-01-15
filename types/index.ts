@@ -152,6 +152,7 @@ export type TProject = {
   thumbnail?: TImage;
   modules?: TModules;
   title?: string;
+  description?: string;
   tags?: TTag[];
   tech?: TTech[];
 };
@@ -159,6 +160,7 @@ export type TProject = {
 export type TProjectModule = TBaseModule & {
   heading?: string;
   projects?: TProject[];
+  projectType?: 'all' | 'some';
 };
 
 export type TCategoryValues =
@@ -192,5 +194,10 @@ export type TModules = (
 )[];
 
 export type THome = {
+  modules?: TModules;
+};
+
+export type TPage = {
+  slug?: Slug;
   modules?: TModules;
 };

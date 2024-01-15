@@ -7,11 +7,11 @@ type Props = {
 
 export default function Testimonial({ testimonial }: Props) {
   return (
-    <Card>
+    <Card className="flex flex-col">
       <CardContent>
         <p>{testimonial?.testimonial || ''}</p>
       </CardContent>
-      <CardFooter>
+      <CardFooter className="mt-auto pt-6">
         <p className="font-medium">{testimonial?.name || ''}</p>
       </CardFooter>
     </Card>
