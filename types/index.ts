@@ -1,5 +1,6 @@
 import type { Url } from 'url';
 import type { ImageAsset, Slug } from 'sanity';
+import type { PortableTextBlock } from '@portabletext/types';
 
 export type TLinkType = 'internal' | 'external';
 
@@ -181,6 +182,27 @@ export type TTech = {
 
 export type TTechStackModule = TBaseModule & {
   tech?: TTech[];
+};
+
+export type TBlog = {
+  slug?: Slug;
+  title?: string;
+  datePublished?: Date;
+  thumbnail?: TImage;
+  tags?: TTag[];
+  modules?: TModules;
+  copy?: PortableTextBlock[];
+};
+
+export type TTable = {
+  rows: { cells: string[]; _key: string }[];
+};
+
+export type TCodeBlock = {
+  language?: string;
+  highlightedLines?: number[];
+  code?: string;
+  filename?: string;
 };
 
 export type TModules = (

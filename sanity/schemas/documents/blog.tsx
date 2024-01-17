@@ -17,6 +17,13 @@ export default defineType({
     publishStatus,
     internalTitle,
     defineField({
+      title: 'Date published',
+      name: 'datePublished',
+      type: 'date',
+      group: 'content',
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
       name: 'thumbnail',
       type: 'customImage',
       group: 'content',

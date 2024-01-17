@@ -7,6 +7,7 @@ import {
   LucideIcon,
   Phone,
   Presentation,
+  ScrollText,
   UserCircle2,
   X,
 } from 'lucide-react';
@@ -21,6 +22,7 @@ const moduleNames = [
   'imageModule',
   'projectModule',
   'techStackModule',
+  'blogModule',
 ] as const;
 
 type TModuleNames = (typeof moduleNames)[number];
@@ -50,6 +52,8 @@ export function getModuleInfo(module: TModuleNames): {
       return { subtitle: 'Project/s', media: AppWindow };
     case 'techStackModule':
       return { subtitle: 'Tech stack', media: Cpu };
+    case 'blogModule':
+      return { subtitle: 'Blog', media: ScrollText };
     default:
       return { subtitle: 'Invalid Module', media: X };
   }

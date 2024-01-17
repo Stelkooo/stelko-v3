@@ -6,8 +6,6 @@ export default function ImageTextLayout({
   heading,
   imageTextCard,
 }: TLayoutModule) {
-  console.log(imageTextCard);
-
   return (
     <section>
       <div className="container my-20 grid items-center gap-2 sm:grid-cols-2 sm:gap-8">

@@ -22,7 +22,6 @@ export default defineField({
       options: {
         withFilename: true,
         language: 'typescript',
-        languageAlternatives: [{ title: 'TSX', value: 'tsx' }],
       },
     }),
     defineField({

@@ -91,6 +91,22 @@ const projectModuleQuery = groq`
   }
 `;
 
+const shortBlog = groq`
+  _id,
+  heading,
+  slug,
+  tags[] {
+    _key,
+    ...@-> {
+      name,
+    },
+  },
+  datePublished,
+  thumbnail {
+    ${imageQuery},
+  },
+`;
+
 const modulesQuery = groq`
   _type == "heroModule" => {
     ${moduleBaseQuery},
@@ -225,6 +241,21 @@ const modulesQuery = groq`
       },
       category,
     },
+  },
+  _type == "blogModule" => {
+    ${moduleBaseQuery},
+    blogType,
+    "posts": select(
+      blogType == "latest" => *[_type == "blog"] | order(datePublished desc)[0...4] {
+        ${shortBlog}
+      },
+      blogType == "all" => *[_type == "blog"] | order(datePublished desc) {
+        ${shortBlog}
+      },
+    ),
+    blogType == 'similar' => {
+      posts,
+    },
   }
 `;
 
@@ -305,6 +336,43 @@ export const pageQuery = groq`
 
 export const pageSeoQuery = groq`
   *[_type == "page" && defined(slug) && slug.current == $slug][0] {
+    seoAndSocial,
+    publishStatus,
+  }
+`;
+
+export const blogQuery = groq`
+  *[_type == 'blog' && defined(slug) && slug.current == $slug][0] {
+    slug,
+    title,
+    thumbnail {
+      ${imageQuery},
+    },
+    tags[]-> {
+      _id,
+      name,
+    },
+    copy[] {
+      ...,
+      markDefs[] {
+        ...,
+        _type == 'link' => {
+          ${linkQuery},
+        },
+      },
+      _type == "customImage" => {
+        ${imageQuery},
+      },
+    },
+    datePublished,
+    modules[] {
+      ${fullModuleQuery},
+    },
+  }
+`;
+
+export const blogSeoQuery = groq`
+  *[_type == "blog" && defined(slug) && slug.current == $slug][0] {
     seoAndSocial,
     publishStatus,
   }
