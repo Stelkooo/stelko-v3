@@ -16,7 +16,9 @@ export function slugify(str: string) {
     .replace(/-+/g, '-'); // remove consecutive hyphens
 }
 
-export function getDateFormatted(date: Date) {
+export function getDateFormatted(date?: Date) {
+  if (!date) return null;
+
   return new Date(date).toLocaleDateString('en-us', {
     year: 'numeric',
     month: 'long',

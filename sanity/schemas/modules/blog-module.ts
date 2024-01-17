@@ -6,16 +6,16 @@ const NAME = 'blogModule';
 
 const { media, subtitle } = getModuleInfo(NAME);
 
-const getHeadline = (type: 'latest' | 'all' | 'similar', headline?: string) => {
+const getHeadline = (type: 'latest' | 'all' | 'similar') => {
   switch (type) {
     case 'all':
-      return 'All Posts';
+      return 'All posts';
     case 'latest':
-      return headline;
+      return 'Latest posts';
     case 'similar':
-      return 'Similar Posts';
+      return 'Similar posts';
     default:
-      return 'Blog Posts';
+      return 'Blog posts';
   }
 };
 
@@ -31,11 +31,6 @@ export default defineField({
       options: { layout: 'radio', list: ['latest', 'all', 'similar'] },
     }),
     defineField({
-      name: 'headline',
-      type: 'string',
-      hidden: ({ parent }) => parent.blogType !== 'latest',
-    }),
-    defineField({
       title: 'Similar Blog Posts',
       name: 'posts',
       type: 'array',
@@ -48,12 +43,11 @@ export default defineField({
   },
   preview: {
     select: {
-      headline: 'headline',
       type: 'blogType',
     },
-    prepare({ headline, type }) {
+    prepare({ type }) {
       return {
-        title: getHeadline(type, headline),
+        title: getHeadline(type),
         subtitle,
         media,
       };

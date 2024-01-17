@@ -93,7 +93,7 @@ const projectModuleQuery = groq`
 
 const shortBlog = groq`
   _id,
-  heading,
+  title,
   slug,
   tags[] {
     _key,
@@ -104,7 +104,7 @@ const shortBlog = groq`
   datePublished,
   thumbnail {
     ${imageQuery},
-  },
+  }
 `;
 
 const modulesQuery = groq`
@@ -245,16 +245,19 @@ const modulesQuery = groq`
   _type == "blogModule" => {
     ${moduleBaseQuery},
     blogType,
+    heading,
     "posts": select(
       blogType == "latest" => *[_type == "blog"] | order(datePublished desc)[0...4] {
-        ${shortBlog}
+        ${shortBlog},
       },
       blogType == "all" => *[_type == "blog"] | order(datePublished desc) {
-        ${shortBlog}
+        ${shortBlog},
       },
     ),
     blogType == 'similar' => {
-      posts,
+      posts[]-> {
+        ${shortBlog},
+      },
     },
   }
 `;

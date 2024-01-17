@@ -185,6 +185,7 @@ export type TTechStackModule = TBaseModule & {
 };
 
 export type TBlog = {
+  _id?: string;
   slug?: Slug;
   title?: string;
   datePublished?: Date;
@@ -203,6 +204,12 @@ export type TCodeBlock = {
   highlightedLines?: number[];
   code?: string;
   filename?: string;
+};
+
+export type TBlogModule = TBaseModule & {
+  blogType?: 'all' | 'similar' | 'latest';
+  posts?: TBlog[];
+  heading?: string;
 };
 
 export type TModules = (

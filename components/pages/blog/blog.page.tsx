@@ -49,7 +49,7 @@ export default function BlogPage({ blog }: Props) {
               )}
             </ul>
           </div>
-          <div className="prose prose-invert prose-table:bg-secondary-foreground prose-td:pl-[0.6em] prose-figcaption:text-primary-foreground prose-xl lg:prose-2xl text-primary-foreground">
+          <div className="prose prose-xl prose-invert text-primary-foreground lg:prose-2xl prose-figcaption:text-primary-foreground prose-table:bg-secondary-foreground prose-td:pl-[0.6em]">
             <CustomPortableText value={blog?.copy} />
           </div>
         </div>
