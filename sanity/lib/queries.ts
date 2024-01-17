@@ -259,6 +259,11 @@ const modulesQuery = groq`
         ${shortBlog},
       },
     },
+  },
+  _type == 'contactModule' => {
+    ${moduleBaseQuery},
+    heading,
+    form,
   }
 `;
 

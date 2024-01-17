@@ -212,6 +212,29 @@ export type TBlogModule = TBaseModule & {
   heading?: string;
 };
 
+export type TInputType =
+  | 'date'
+  | 'email'
+  | 'number'
+  | 'tel'
+  | 'text'
+  | 'textArea';
+
+export type TInput = {
+  isRequired?: boolean;
+  fieldLabel?: string;
+  fieldId?: Slug;
+  inputType?: TInputType;
+  _key?: string;
+};
+
+export type TForm = { fields?: TInput[]; _key?: string }[];
+
+export type TContactModule = TBaseModule & {
+  heading?: string;
+  form?: TForm;
+};
+
 export type TModules = (
   | THeroModule
   | TLayoutModule
@@ -221,6 +244,8 @@ export type TModules = (
   | TImageModule
   | TProjectModule
   | TTechStackModule
+  | TBlogModule
+  | TContactModule
 )[];
 
 export type THome = {

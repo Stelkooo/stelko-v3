@@ -6,6 +6,7 @@ import {
   Layout,
   LucideIcon,
   Phone,
+  PhoneCall,
   Presentation,
   ScrollText,
   UserCircle2,
@@ -23,6 +24,7 @@ const moduleNames = [
   'projectModule',
   'techStackModule',
   'blogModule',
+  'contactModule',
 ] as const;
 
 type TModuleNames = (typeof moduleNames)[number];
@@ -54,6 +56,8 @@ export function getModuleInfo(module: TModuleNames): {
       return { subtitle: 'Tech stack', media: Cpu };
     case 'blogModule':
       return { subtitle: 'Blog', media: ScrollText };
+    case 'contactModule':
+      return { subtitle: 'Contact', media: PhoneCall };
     default:
       return { subtitle: 'Invalid Module', media: X };
   }

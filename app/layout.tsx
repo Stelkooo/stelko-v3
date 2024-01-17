@@ -4,6 +4,7 @@ import { Bricolage_Grotesque } from 'next/font/google';
 
 import { cn } from '@/lib/utils';
 import { WEBSITE_HOST_URL } from '@/lib/constants';
+import { Toaster } from '@/components/ui/sonner';
 
 const bricolageGrotesque = Bricolage_Grotesque({
   subsets: ['latin'],
@@ -34,6 +35,7 @@ export default function RootLayout({
         )}
       >
         {children}
+        <Toaster />
       </body>
     </html>
   );

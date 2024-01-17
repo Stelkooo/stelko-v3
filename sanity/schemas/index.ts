@@ -16,6 +16,7 @@ import testimonial from './documents/testimonial';
 // Modules import
 import modulesSchema from './modules';
 import blogModule from './modules/blog-module';
+import contactModule from './modules/contact-module';
 import ctaModule from './modules/cta-module';
 import faqModule from './modules/faq-module';
 import heroModule from './modules/hero-module';
@@ -49,6 +50,7 @@ const documents = [
 const modules = [
   modulesSchema,
   blogModule,
+  contactModule,
   ctaModule,
   faqModule,
   heroModule,
