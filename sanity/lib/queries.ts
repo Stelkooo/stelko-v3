@@ -222,6 +222,7 @@ const modulesQuery = groq`
   _type == 'projectModule' => {
     ${moduleBaseQuery},
     heading,
+    projectType,
     projectType == 'some' => {
       projects[]-> {
         ${projectModuleQuery},

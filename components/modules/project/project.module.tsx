@@ -5,7 +5,11 @@ import { TProjectModule } from '@/types';
 import Photo from '@/components/shared/photo.component';
 import Tags from '@/components/shared/tags.component';
 
-export default function ProjectModule({ heading, projects }: TProjectModule) {
+export default function ProjectModule({
+  heading,
+  projects,
+  projectType,
+}: TProjectModule) {
   return (
     <section>
       <div className="container my-20 space-y-8">
@@ -17,9 +21,15 @@ export default function ProjectModule({ heading, projects }: TProjectModule) {
                 <Link href={`${resolveHref('project', project.slug?.current)}`}>
                   <div className="group/project grid gap-y-8 border-t py-4 lg:grid-cols-2">
                     <div className="space-y-4 lg:pr-8">
-                      <h3 className="group-hover/project:underline">
-                        {project?.title}
-                      </h3>
+                      {projectType === 'all' ? (
+                        <h2 className="as-h3 group-hover/project:underline">
+                          {project?.title}
+                        </h2>
+                      ) : (
+                        <h3 className="group-hover/project:underline">
+                          {project?.title}
+                        </h3>
+                      )}
                       <p>{project?.description}</p>
                       <Tags tags={project?.tags} />
                     </div>
