@@ -10,7 +10,7 @@ export default function Tags({ tags }: Props) {
     <ul className="relative flex flex-wrap gap-2">
       {tags
         ? tags.map((tag) => (
-            <li key={tag._id}>
+            <li key={tag._key}>
               <Badge>{tag.name}</Badge>
             </li>
           ))

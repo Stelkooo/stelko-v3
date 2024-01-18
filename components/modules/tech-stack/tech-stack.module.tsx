@@ -25,7 +25,10 @@ export default function TechStackModule({ tech }: TTechStackModule) {
                   {tech.map((item) => {
                     if (item?.category === category?.value) {
                       return (
-                        <li key={item?._id} className="flex items-center gap-3">
+                        <li
+                          key={item?._key}
+                          className="flex items-center gap-3"
+                        >
                           {item?.image ? (
                             <Photo
                               image={item.image}

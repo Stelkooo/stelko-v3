@@ -7,19 +7,15 @@ type Props = { header?: THeader };
 
 export default function DesktopNavHeader({ header }: Props) {
   return (
-    <nav className="max-md:hidden">
-      <ul className="flex items-center gap-8 text-xl lg:text-2xl">
-        <Nav navLinks={header?.navLinks} />
-        {header?.cta ? (
-          <li>
-            <Button className="w-full" asChild>
-              <SiteLink link={header?.cta?.link}>
-                {header?.cta?.title || ''}
-              </SiteLink>
-            </Button>
-          </li>
-        ) : null}
-      </ul>
-    </nav>
+    <div className="flex items-center gap-8 text-xl max-md:hidden lg:text-2xl">
+      <Nav navLinks={header?.navLinks} />
+      {header?.cta ? (
+        <Button className="w-full" asChild>
+          <SiteLink link={header?.cta?.link}>
+            {header?.cta?.title || ''}
+          </SiteLink>
+        </Button>
+      ) : null}
+    </div>
   );
 }

@@ -85,9 +85,11 @@ const projectModuleQuery = groq`
   title,
   slug,
   description,
-  tags[]-> {
-    _id,
-    name,
+  tags[] {
+    _key,
+    ...@-> {
+      name,
+    },
   }
 `;
 
@@ -233,13 +235,16 @@ const modulesQuery = groq`
   },
   _type == 'techStackModule' => {
     ${moduleBaseQuery},
-    tech[]-> {
-      _id,
-      name,
-      image {
-        ${imageQuery},
+    tech[] {
+      _key,
+      ...@-> {
+        _id,
+        name,
+        image {
+          ${imageQuery},
+        },
+        category,
       },
-      category,
     },
   },
   _type == "blogModule" => {
@@ -308,9 +313,11 @@ export const projectQuery = groq`
     thumbnail {
       ${imageQuery},
     },
-    tags[]-> {
-      _id,
-      name,
+    tags[] {
+      _key,
+      ...@-> {
+        name,
+      },
     },
     modules[] {
       ${fullModuleQuery},
@@ -356,9 +363,11 @@ export const blogQuery = groq`
     thumbnail {
       ${imageQuery},
     },
-    tags[]-> {
-      _id,
-      name,
+    tags[] {
+      _key,
+      ...@-> {
+        name,
+      },
     },
     copy[] {
       ...,

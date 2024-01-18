@@ -143,6 +143,7 @@ export type TImageModule = TBaseModule & {
 };
 
 export type TTag = {
+  _key?: string;
   _id?: string;
   name?: string;
 };
@@ -174,6 +175,7 @@ export type TCategoryValues =
   | 'communicationAndProjectManagement';
 
 export type TTech = {
+  _key?: string;
   _id?: string;
   category?: TCategoryValues;
   name?: string;
