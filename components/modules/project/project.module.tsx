@@ -24,10 +24,11 @@ export default function ProjectModule({ heading, projects }: TProjectModule) {
                       <Tags tags={project?.tags} />
                     </div>
                     {project?.thumbnail ? (
-                      <figure className="overflow-hidden rounded-sm border">
+                      <figure className="relative h-96 overflow-hidden rounded-sm border">
                         <Photo
                           image={project.thumbnail}
-                          className="transition-transform group-hover/project:scale-110"
+                          className="object-cover transition-transform group-hover/project:scale-110"
+                          fill
                           sizes="(min-width: 2040px) 926px, (min-width: 1040px) 44.9vw, 97.78vw"
                         />
                       </figure>
