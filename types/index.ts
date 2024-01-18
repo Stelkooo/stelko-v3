@@ -237,6 +237,12 @@ export type TContactModule = TBaseModule & {
   form?: TForm;
 };
 
+export type TRedirect = {
+  source?: string;
+  permanent?: boolean;
+  destination?: { _type?: string; slug?: Slug };
+};
+
 export type TModules = (
   | THeroModule
   | TLayoutModule

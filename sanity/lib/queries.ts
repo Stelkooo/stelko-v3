@@ -395,3 +395,9 @@ export const blogSeoQuery = groq`
     publishStatus,
   }
 `;
+
+export const redirectsQuery = groq`
+  *[_type == 'general' && _id == 'general'][0] {
+    redirects,
+  }
+`;

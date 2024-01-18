@@ -1,5 +1,5 @@
 import { Settings } from 'lucide-react';
-import { defineField, defineType } from 'sanity';
+import { defineArrayMember, defineField, defineType } from 'sanity';
 
 export default defineType({
   title: 'General Settings',
@@ -22,6 +22,32 @@ export default defineType({
       ],
     }),
     defineField({ name: 'socials', type: 'socials' }),
+    defineField({
+      name: 'redirects',
+      type: 'array',
+      of: [
+        defineArrayMember({
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'source',
+              type: 'string',
+              validation: (rule) => rule.required(),
+            }),
+            defineField({
+              name: 'destination',
+              type: 'string',
+              validation: (rule) => rule.required(),
+            }),
+            defineField({
+              name: 'permanent',
+              type: 'boolean',
+              initialValue: () => true,
+            }),
+          ],
+        }),
+      ],
+    }),
   ],
   preview: {
     prepare() {
