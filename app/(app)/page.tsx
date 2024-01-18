@@ -1,9 +1,12 @@
 import { Metadata } from 'next';
+import { draftMode } from 'next/headers';
 
 import { sanityFetch } from '@/sanity/lib/fetch';
 import { homeQuery, homeSeoQuery } from '@/sanity/lib/queries';
 import { THome, TSeo } from '@/types';
 import HomePage from '@/components/pages/home/home.page';
+import { loadQuery } from '@/sanity/lib/store';
+import HomePreviewPage from '@/components/pages/home/home-preview.page';
 
 export async function generateMetadata(): Promise<Metadata> {
   const homeSeo = await sanityFetch<TSeo>({
@@ -24,9 +27,17 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Home() {
-  const home = await sanityFetch<THome>({
-    query: homeQuery,
-    tags: ['home', 'site'],
-  });
-  return <HomePage home={home} />;
+  const home = await loadQuery<THome>(
+    homeQuery,
+    {},
+    {
+      perspective: draftMode().isEnabled ? 'previewDrafts' : 'published',
+    }
+  );
+
+  return draftMode().isEnabled ? (
+    <HomePreviewPage initial={home} />
+  ) : (
+    <HomePage home={home.data} />
+  );
 }

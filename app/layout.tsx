@@ -1,10 +1,12 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { Bricolage_Grotesque } from 'next/font/google';
+import { draftMode } from 'next/headers';
 
 import { cn } from '@/lib/utils';
 import { WEBSITE_HOST_URL } from '@/lib/constants';
 import { Toaster } from '@/components/ui/sonner';
+import VisualEditing from '@/components/global/visual-editing.global';
 
 const bricolageGrotesque = Bricolage_Grotesque({
   subsets: ['latin'],
@@ -35,6 +37,7 @@ export default function RootLayout({
         )}
       >
         {children}
+        {draftMode().isEnabled ? <VisualEditing /> : null}
         <Toaster />
       </body>
     </html>

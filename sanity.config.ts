@@ -5,6 +5,7 @@ import { deskTool } from 'sanity/desk';
 import { codeInput } from '@sanity/code-input';
 import { table } from '@sanity/table';
 import { media } from 'sanity-plugin-media';
+import { presentationTool } from 'sanity/presentation';
 
 import { apiVersion, dataset, projectId } from './sanity/env';
 import schema from './sanity/schemas';
@@ -25,6 +26,13 @@ export default defineConfig({
     codeInput(),
     table(),
     media(),
+    presentationTool({
+      previewUrl: {
+        draftMode: {
+          enable: '/api/draft',
+        },
+      },
+    }),
     ...(isDev ? devOnlyPlugins : []),
   ],
 });
