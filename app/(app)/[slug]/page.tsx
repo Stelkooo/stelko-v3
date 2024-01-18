@@ -39,6 +39,8 @@ export default async function Page({ params }: { params: { slug: string } }) {
     perspective: draftMode().isEnabled ? 'previewDrafts' : 'published',
   });
 
+  if (!initial) return notFound();
+
   return draftMode().isEnabled ? (
     <SlugPreviewPage initial={initial} params={params} />
   ) : (

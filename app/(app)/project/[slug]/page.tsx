@@ -1,10 +1,13 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import { draftMode } from 'next/headers';
 
 import { sanityFetch } from '@/sanity/lib/fetch';
 import { projectQuery, projectSeoQuery } from '@/sanity/lib/queries';
 import { TProject, TSeo } from '@/types';
 import ProjectPage from '@/components/pages/project/project.page';
+import { loadQuery } from '@/sanity/lib/store';
+import ProjectPreviewPage from '@/components/pages/project/project-preview.page';
 
 export async function generateMetadata({
   params,
@@ -32,13 +35,15 @@ export async function generateMetadata({
 }
 
 export default async function Page({ params }: { params: { slug: string } }) {
-  const project = await sanityFetch<TProject>({
-    query: projectQuery,
-    tags: ['project', 'site'],
-    params,
+  const initial = await loadQuery<TProject>(projectQuery, params, {
+    perspective: draftMode().isEnabled ? 'previewDrafts' : 'published',
   });
 
-  if (!project) return notFound();
+  if (!initial) return notFound();
 
-  return <ProjectPage project={project} />;
+  return draftMode().isEnabled ? (
+    <ProjectPreviewPage initial={initial} params={params} />
+  ) : (
+    <ProjectPage project={initial.data} />
+  );
 }
