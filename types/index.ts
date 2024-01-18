@@ -61,7 +61,7 @@ export type TSeo = {
 
 export type TSitemap = {
   slug?: Slug;
-  _updatedAt?: string;
+  _updatedAt?: Date;
   _type?: string;
 };
 

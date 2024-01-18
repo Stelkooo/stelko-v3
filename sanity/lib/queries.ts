@@ -301,7 +301,6 @@ export const homeSeoQuery = groq`
 
 export const homeSitemapQuery = groq`
   *[_type == "home" && _id == "home"][0] {
-    _type,
     _updatedAt,
   }
 `;
@@ -334,6 +333,14 @@ export const projectQuery = groq`
   }
 `;
 
+export const projectsSitemapQuery = groq`
+  *[_type == "project" && defined(slug)] {
+    _updatedAt,
+    _type,
+    slug,
+  }
+`;
+
 export const projectSeoQuery = groq`
   *[_type == "project" && defined(slug) && slug.current == $slug][0] {
     seoAndSocial,
@@ -347,6 +354,14 @@ export const pageQuery = groq`
     modules[] {
       ${fullModuleQuery},
     },
+  }
+`;
+
+export const pagesSitemapQuery = groq`
+  *[_type == "page" && defined(slug)] {
+    _updatedAt,
+    _type,
+    slug,
   }
 `;
 
@@ -386,6 +401,14 @@ export const blogQuery = groq`
     modules[] {
       ${fullModuleQuery},
     },
+  }
+`;
+
+export const blogSitemapQuery = groq`
+  *[_type == "blog" && defined(slug)] {
+    _updatedAt,
+    _type,
+    slug,
   }
 `;
 
