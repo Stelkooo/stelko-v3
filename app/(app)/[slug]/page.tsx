@@ -1,13 +1,17 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { draftMode } from 'next/headers';
+import dynamic from 'next/dynamic';
 
 import SlugPage from '@/components/pages/slug/slug.page';
 import { sanityFetch } from '@/sanity/lib/fetch';
 import { pageQuery, pageSeoQuery } from '@/sanity/lib/queries';
 import { TPage, TSeo } from '@/types';
 import { loadQuery } from '@/sanity/lib/store';
-import SlugPreviewPage from '@/components/pages/slug/slug-preview.page';
+
+const SlugPreviewPage = dynamic(
+  () => import('@/components/pages/slug/slug-preview.page')
+);
 
 export async function generateMetadata({
   params,
@@ -39,11 +43,10 @@ export default async function Page({ params }: { params: { slug: string } }) {
     perspective: draftMode().isEnabled ? 'previewDrafts' : 'published',
   });
 
+  if (draftMode().isEnabled)
+    return <SlugPreviewPage initial={initial} params={params} />;
+
   if (!initial) return notFound();
 
-  return draftMode().isEnabled ? (
-    <SlugPreviewPage initial={initial} params={params} />
-  ) : (
-    <SlugPage page={initial.data} />
-  );
+  return <SlugPage page={initial.data} />;
 }

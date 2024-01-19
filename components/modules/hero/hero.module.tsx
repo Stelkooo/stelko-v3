@@ -19,7 +19,12 @@ export default function HeroModule({
         })}
       >
         {image ? (
-          <Photo image={image} fill className="object-cover opacity-15" />
+          <Photo
+            image={image}
+            fill
+            className="object-cover opacity-15"
+            loading="eager"
+          />
         ) : null}
         {heading ? <h1 className="relative">{heading}</h1> : null}
         {subheading ? (
