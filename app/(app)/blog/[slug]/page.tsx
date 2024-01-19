@@ -1,10 +1,17 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import { draftMode } from 'next/headers';
+import dynamic from 'next/dynamic';
 
 import { sanityFetch } from '@/sanity/lib/fetch';
 import { TBlog, TSeo } from '@/types';
 import { blogQuery, blogSeoQuery } from '@/sanity/lib/queries';
 import BlogPage from '@/components/pages/blog/blog.page';
+import { loadQuery } from '@/sanity/lib/store';
+
+const BlogPreviewPage = dynamic(
+  () => import('@/components/pages/blog/blog-preview.page')
+);
 
 export async function generateMetadata({
   params,
@@ -32,13 +39,14 @@ export async function generateMetadata({
 }
 
 export default async function Page({ params }: { params: { slug: string } }) {
-  const blog = await sanityFetch<TBlog>({
-    query: blogQuery,
-    tags: ['blog', 'site'],
-    params,
+  const initial = await loadQuery<TBlog>(blogQuery, params, {
+    perspective: draftMode().isEnabled ? 'previewDrafts' : 'published',
   });
 
-  if (!blog) return notFound();
+  if (draftMode().isEnabled)
+    return <BlogPreviewPage initial={initial} params={params} />;
 
-  return <BlogPage blog={blog} />;
+  if (!initial.data) return notFound();
+
+  return <BlogPage blog={initial.data} />;
 }

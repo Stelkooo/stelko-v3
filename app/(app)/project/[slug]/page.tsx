@@ -1,10 +1,17 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import { draftMode } from 'next/headers';
+import dynamic from 'next/dynamic';
 
 import { sanityFetch } from '@/sanity/lib/fetch';
 import { projectQuery, projectSeoQuery } from '@/sanity/lib/queries';
 import { TProject, TSeo } from '@/types';
 import ProjectPage from '@/components/pages/project/project.page';
+import { loadQuery } from '@/sanity/lib/store';
+
+const ProjectPreviewPage = dynamic(
+  () => import('@/components/pages/project/project-preview.page')
+);
 
 export async function generateMetadata({
   params,
@@ -32,13 +39,14 @@ export async function generateMetadata({
 }
 
 export default async function Page({ params }: { params: { slug: string } }) {
-  const project = await sanityFetch<TProject>({
-    query: projectQuery,
-    tags: ['project', 'site'],
-    params,
+  const initial = await loadQuery<TProject>(projectQuery, params, {
+    perspective: draftMode().isEnabled ? 'previewDrafts' : 'published',
   });
 
-  if (!project) return notFound();
+  if (draftMode().isEnabled)
+    return <ProjectPreviewPage initial={initial} params={params} />;
 
-  return <ProjectPage project={project} />;
+  if (!initial.data) return notFound();
+
+  return <ProjectPage project={initial.data} />;
 }

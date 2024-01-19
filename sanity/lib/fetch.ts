@@ -4,12 +4,12 @@ import type { QueryParams } from '@sanity/client';
 import { draftMode } from 'next/headers';
 
 import { client } from './client';
-
-export const token = process.env.SANITY_API_READ_TOKEN;
+import { token } from './token';
 
 const DEFAULT_PARAMS = {} as QueryParams;
 const DEFAULT_TAGS = [] as string[];
 
+// eslint-disable-next-line import/prefer-default-export
 export async function sanityFetch<QueryResponse>({
   query,
   params = DEFAULT_PARAMS,

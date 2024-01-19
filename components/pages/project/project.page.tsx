@@ -1,3 +1,5 @@
+import { vercelStegaCleanAll } from '@sanity/client/stega';
+
 import HeroModule from '@/components/modules/hero/hero.module';
 import ModuleBuilder from '@/components/modules/module-builder.component';
 import { TProject } from '@/types';
@@ -5,16 +7,18 @@ import { TProject } from '@/types';
 type Props = { project?: TProject };
 
 export default function ProjectPage({ project }: Props) {
+  const projectCleaned = vercelStegaCleanAll(project);
+
   return (
     <>
       <HeroModule
-        heading={project?.title}
-        subheading={project?.description}
-        image={project?.thumbnail}
-        tags={project?.tags}
+        heading={projectCleaned?.title}
+        subheading={projectCleaned?.description}
+        image={projectCleaned?.thumbnail}
+        tags={projectCleaned?.tags}
       />
-      {project?.modules
-        ? project.modules.map((module) => {
+      {projectCleaned?.modules
+        ? projectCleaned.modules.map((module) => {
             // eslint-disable-next-line react/jsx-props-no-spreading
             return <ModuleBuilder key={module._key} {...module} />;
           })

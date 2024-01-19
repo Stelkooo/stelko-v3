@@ -1,9 +1,7 @@
-import type { Metadata } from 'next';
 import './globals.css';
 import { Bricolage_Grotesque } from 'next/font/google';
 
 import { cn } from '@/lib/utils';
-import { WEBSITE_HOST_URL } from '@/lib/constants';
 import { Toaster } from '@/components/ui/sonner';
 
 const bricolageGrotesque = Bricolage_Grotesque({
@@ -13,21 +11,13 @@ const bricolageGrotesque = Bricolage_Grotesque({
   adjustFontFallback: false,
 });
 
-export const metadata: Metadata = {
-  title: {
-    template: '%s | Stelko',
-    default: 'Stelko',
-  },
-  metadataBase: new URL(WEBSITE_HOST_URL),
-};
-
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className="scroll-smooth">
       <body
         className={cn(
           bricolageGrotesque.variable,

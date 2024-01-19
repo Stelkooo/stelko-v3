@@ -19,11 +19,16 @@ export default function HeroModule({
         })}
       >
         {image ? (
-          <Photo image={image} fill className="object-cover opacity-15" />
+          <Photo
+            image={image}
+            fill
+            className="object-cover opacity-15"
+            loading="eager"
+          />
         ) : null}
         {heading ? <h1 className="relative">{heading}</h1> : null}
         {subheading ? (
-          <p className="as-h4 sm:max-w-[60%]">{subheading}</p>
+          <p className="as-h4 relative sm:max-w-[60%]">{subheading}</p>
         ) : null}
         {tags ? <Tags tags={tags} /> : null}
       </div>
