@@ -1,4 +1,3 @@
-import { Suspense } from 'react';
 import dynamic from 'next/dynamic';
 import { draftMode } from 'next/headers';
 import { Metadata } from 'next';
@@ -32,15 +31,9 @@ export default async function Layout({
   return (
     <>
       <div className="flex min-h-[100dvh] flex-col">
-        <Suspense>
-          <Header header={site?.header} />
-        </Suspense>
-        <main className="flex-1">
-          <Suspense>{children}</Suspense>
-        </main>
-        <Suspense>
-          <Footer footer={site?.footer} />
-        </Suspense>
+        <Header header={site?.header} />
+        <main className="flex-1">{children}</main>
+        <Footer footer={site?.footer} />
       </div>
       {draftMode().isEnabled && <VisualEditing />}
     </>
