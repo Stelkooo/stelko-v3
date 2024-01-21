@@ -11,6 +11,8 @@ export default function resolveHref(
       return slug ? `/blog/${slug}` : undefined;
     case 'project':
       return slug ? `/project/${slug}` : undefined;
+    case 'service':
+      return slug ? `/service/${slug}` : undefined;
     default:
       // eslint-disable-next-line no-console
       console.warn('Invalid document type:', documentType);

@@ -1,4 +1,11 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import CTA from '@/components/shared/cta.component';
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { TLayoutModule } from '@/types';
 
@@ -23,25 +30,31 @@ export default function ColumnLayout({
         >
           {twoColumnCards
             ? twoColumnCards.map((card) => (
-                <Card key={card._key}>
+                <Card key={card._key} className="flex flex-col">
                   <CardHeader>
                     <CardTitle>{card?.heading}</CardTitle>
                   </CardHeader>
                   <CardContent>
                     {card?.text ? <p>{card.text}</p> : null}
                   </CardContent>
+                  <CardFooter className="mt-auto">
+                    {card?.cta?.title ? <CTA cta={card.cta} /> : null}
+                  </CardFooter>
                 </Card>
               ))
             : null}
           {threeColumnCards
             ? threeColumnCards.map((card) => (
-                <Card key={card._key}>
+                <Card key={card._key} className="flex flex-col">
                   <CardHeader>
                     <CardTitle>{card?.heading}</CardTitle>
                   </CardHeader>
                   <CardContent>
                     {card?.text ? <p>{card.text}</p> : null}
                   </CardContent>
+                  <CardFooter className="mt-auto">
+                    {card?.cta?.title ? <CTA cta={card.cta} /> : null}
+                  </CardFooter>
                 </Card>
               ))
             : null}

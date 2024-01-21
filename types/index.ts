@@ -243,6 +243,13 @@ export type TRedirect = {
   destination?: { _type?: string; slug?: Slug };
 };
 
+export type TService = {
+  _id?: string;
+  slug?: Slug;
+  title?: string;
+  modules?: TModules;
+};
+
 export type TModules = (
   | THeroModule
   | TLayoutModule

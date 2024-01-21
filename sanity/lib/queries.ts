@@ -127,6 +127,9 @@ const modulesQuery = groq`
         _key,
         heading,
         text,
+        cta {
+          ${navLinkQuery},
+        },
       },
     },
     layoutType == "threeColumnCards" => {
@@ -134,6 +137,9 @@ const modulesQuery = groq`
         _key,
         heading,
         text,
+        cta {
+          ${navLinkQuery},
+        },
       },
     },
     layoutType == "imageTextCard" => {
@@ -144,6 +150,9 @@ const modulesQuery = groq`
           ${imageQuery},
         },
         imageOnLeft,
+        cta {
+          ${navLinkQuery},
+        },
       },
     },
     layoutType == "headingTextCard" => {
@@ -414,6 +423,30 @@ export const blogSitemapQuery = groq`
 
 export const blogSeoQuery = groq`
   *[_type == "blog" && defined(slug) && slug.current == $slug][0] {
+    seoAndSocial,
+    publishStatus,
+  }
+`;
+
+export const serviceQuery = groq`
+  *[_type == 'service' && defined(slug) && slug.current == $slug][0] {
+    slug,
+    modules[] {
+      ${fullModuleQuery},
+    },
+  }
+`;
+
+export const servicesSitemapQuery = groq`
+  *[_type == "service" && defined(slug)] {
+    _updatedAt,
+    _type,
+    slug,
+  }
+`;
+
+export const serviceSeoQuery = groq`
+  *[_type == "service" && defined(slug) && slug.current == $slug][0] {
     seoAndSocial,
     publishStatus,
   }

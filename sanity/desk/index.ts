@@ -7,6 +7,7 @@ import techStructure from './tech-structure';
 import projectStructure from './project-structure';
 import testimonialStructure from './testimonial-structure';
 import reusableModulesStructure from './reusable-modules-structure';
+import serviceStructure from './service-structure';
 
 const hiddenDocTypes = (listItem: ListItemBuilder) => {
   const id = listItem.getId();
@@ -23,6 +24,7 @@ const hiddenDocTypes = (listItem: ListItemBuilder) => {
     'page',
     'project',
     'reusableModule',
+    'service',
     'tag',
     'tech',
     'testimonial',
@@ -43,6 +45,7 @@ const structure: StructureResolver = (S, context) =>
       techStructure(S, context),
       S.divider(),
       projectStructure(S, context),
+      serviceStructure(S, context),
       testimonialStructure(S, context),
       S.divider(),
       S.documentListItem().id('general').schemaType('general'),

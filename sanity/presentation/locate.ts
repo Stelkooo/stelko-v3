@@ -24,7 +24,8 @@ export const locate: DocumentLocationResolver = (params, context) => {
     params.type === 'page' ||
     params.type === 'project' ||
     params.type === 'blog' ||
-    params.type === 'reusableModule'
+    params.type === 'reusableModule' ||
+    params.type === 'service'
   ) {
     const doc$ = context.documentStore.listenQuery(
       `*[_id==$id || references($id)]{_type,slug,title}`,
@@ -108,6 +109,22 @@ export const locate: DocumentLocationResolver = (params, context) => {
                 : undefined,
             } satisfies DocumentLocationsState;
           case 'reusableModule':
+            return {
+              locations: docs
+                ?.map((doc) => {
+                  const href = resolveHref(doc._type, doc?.slug?.current);
+                  return {
+                    title: doc?.title || 'Untitled',
+                    href: href!,
+                  };
+                })
+                .filter((doc) => doc.href !== undefined),
+              tone: isReferencedBySettings ? 'caution' : undefined,
+              message: isReferencedBySettings
+                ? 'This document is used on all pages as it is in the top menu'
+                : undefined,
+            } satisfies DocumentLocationsState;
+          case 'service':
             return {
               locations: docs
                 ?.map((doc) => {

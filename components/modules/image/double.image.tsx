@@ -7,7 +7,7 @@ export default function DoubleImage({ images }: TImageModule) {
       <div className="container my-20 grid gap-4 sm:grid-cols-2">
         {images
           ? images.map((image) =>
-              image ? (
+              image?.asset ? (
                 <figure key={image._key}>
                   <Photo image={image} />
                   {image?.caption ? (

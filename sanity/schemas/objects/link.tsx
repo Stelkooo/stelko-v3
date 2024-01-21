@@ -22,6 +22,7 @@ export default defineField({
         { type: 'project' },
         { type: 'home' },
         { type: 'blog' },
+        { type: 'service' },
       ],
       hidden: ({ parent }) => parent?.linkType !== 'internal',
     }),

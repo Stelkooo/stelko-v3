@@ -9,6 +9,7 @@ import home from './documents/home';
 import page from './documents/page';
 import project from './documents/project';
 import reusableModules from './documents/reusable-modules';
+import service from './documents/service';
 import tags from './documents/tags';
 import tech from './documents/tech';
 import testimonial from './documents/testimonial';
@@ -42,6 +43,7 @@ const documents = [
   page,
   project,
   reusableModules,
+  service,
   tags,
   tech,
   testimonial,
