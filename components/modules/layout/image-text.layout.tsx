@@ -1,3 +1,4 @@
+import CTA from '@/components/shared/cta.component';
 import CustomPortableText from '@/components/shared/custom-portable-text.component';
 import Photo from '@/components/shared/photo.component';
 import { cn } from '@/lib/utils';
@@ -10,11 +11,12 @@ export default function ImageTextLayout({
   return (
     <section>
       <div className="container my-20 grid items-center gap-2 sm:grid-cols-2 sm:gap-8">
-        <div className="space-y-2">
+        <div className="flex flex-col gap-2">
           {heading ? <h2>{heading}</h2> : null}
           <div className="prose prose-invert">
             <CustomPortableText value={imageTextCard?.copy} />
           </div>
+          <CTA cta={imageTextCard?.cta} className="self-end" />
         </div>
         {imageTextCard?.image ? (
           <figure

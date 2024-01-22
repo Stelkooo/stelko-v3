@@ -38,8 +38,8 @@ export default function ColumnLayout({
                   <CardContent className="prose prose-invert">
                     <CustomPortableText value={card?.copy} />
                   </CardContent>
-                  <CardFooter className="mt-auto">
-                    {card?.cta?.title ? <CTA cta={card.cta} /> : null}
+                  <CardFooter className="mt-auto flex flex-col">
+                    <CTA cta={card.cta} className="self-end" />
                   </CardFooter>
                 </Card>
               ))
@@ -53,8 +53,8 @@ export default function ColumnLayout({
                   <CardContent className="prose prose-invert">
                     <CustomPortableText value={card?.copy} />
                   </CardContent>
-                  <CardFooter className="mt-auto">
-                    {card?.cta?.title ? <CTA cta={card.cta} /> : null}
+                  <CardFooter className="mt-auto flex flex-col">
+                    <CTA cta={card.cta} className="self-end" />
                   </CardFooter>
                 </Card>
               ))
