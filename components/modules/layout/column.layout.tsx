@@ -1,4 +1,5 @@
 import CTA from '@/components/shared/cta.component';
+import CustomPortableText from '@/components/shared/custom-portable-text.component';
 import {
   Card,
   CardContent,
@@ -34,8 +35,8 @@ export default function ColumnLayout({
                   <CardHeader>
                     <CardTitle>{card?.heading}</CardTitle>
                   </CardHeader>
-                  <CardContent>
-                    {card?.text ? <p>{card.text}</p> : null}
+                  <CardContent className="prose prose-invert">
+                    <CustomPortableText value={card?.copy} />
                   </CardContent>
                   <CardFooter className="mt-auto">
                     {card?.cta?.title ? <CTA cta={card.cta} /> : null}
@@ -49,8 +50,8 @@ export default function ColumnLayout({
                   <CardHeader>
                     <CardTitle>{card?.heading}</CardTitle>
                   </CardHeader>
-                  <CardContent>
-                    {card?.text ? <p>{card.text}</p> : null}
+                  <CardContent className="prose prose-invert">
+                    <CustomPortableText value={card?.copy} />
                   </CardContent>
                   <CardFooter className="mt-auto">
                     {card?.cta?.title ? <CTA cta={card.cta} /> : null}

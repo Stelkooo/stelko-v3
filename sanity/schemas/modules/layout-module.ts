@@ -1,5 +1,6 @@
 import { defineArrayMember, defineField } from 'sanity';
 import { getModuleInfo } from '.';
+import customBlock from '../objects/custom-block';
 
 const NAME = 'layoutModule';
 
@@ -41,11 +42,7 @@ export default defineField({
               name: 'heading',
               type: 'string',
             }),
-            defineField({
-              name: 'text',
-              type: 'text',
-              rows: 3,
-            }),
+            customBlock,
             defineField({
               title: 'CTA',
               name: 'cta',
@@ -69,11 +66,7 @@ export default defineField({
               name: 'heading',
               type: 'string',
             }),
-            defineField({
-              name: 'text',
-              type: 'text',
-              rows: 3,
-            }),
+            customBlock,
             defineField({
               title: 'CTA',
               name: 'cta',
@@ -90,11 +83,7 @@ export default defineField({
       name: 'imageTextCard',
       type: 'object',
       fields: [
-        defineField({
-          name: 'text',
-          type: 'text',
-          rows: 3,
-        }),
+        customBlock,
         defineField({
           name: 'image',
           type: 'customImage',
@@ -118,11 +107,7 @@ export default defineField({
       name: 'headingTextCard',
       type: 'object',
       fields: [
-        defineField({
-          name: 'text',
-          type: 'text',
-          rows: 3,
-        }),
+        customBlock,
         defineField({
           title: 'Text on left?',
           name: 'textOnLeft',

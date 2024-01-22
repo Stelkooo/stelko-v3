@@ -126,7 +126,7 @@ const modulesQuery = groq`
       twoColumnCards[] {
         _key,
         heading,
-        text,
+        copy,
         cta {
           ${navLinkQuery},
         },
@@ -136,7 +136,7 @@ const modulesQuery = groq`
       threeColumnCards[] {
         _key,
         heading,
-        text,
+        copy,
         cta {
           ${navLinkQuery},
         },
@@ -145,7 +145,7 @@ const modulesQuery = groq`
     layoutType == "imageTextCard" => {
       imageTextCard {
         heading,
-        text,
+        copy,
         image {
           ${imageQuery},
         },
@@ -158,7 +158,7 @@ const modulesQuery = groq`
     layoutType == "headingTextCard" => {
       headingTextCard {
         heading,
-        text,
+        copy,
         textOnLeft,
       },
     },
@@ -437,13 +437,15 @@ export const serviceQuery = groq`
   }
 `;
 
-export const servicesSitemapQuery = groq`
-  *[_type == "service" && defined(slug)] {
-    _updatedAt,
-    _type,
-    slug,
-  }
-`;
+export const sitemapQuery = (type: string) => {
+  return groq`
+    *[_type == "${type}" && defined(slug) && publishStatus == "public"] {
+      _updatedAt,
+      _type,
+      slug,
+    }
+  `;
+};
 
 export const serviceSeoQuery = groq`
   *[_type == "service" && defined(slug) && slug.current == $slug][0] {

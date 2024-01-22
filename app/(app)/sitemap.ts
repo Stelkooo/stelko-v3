@@ -6,6 +6,7 @@ import {
   homeSitemapQuery,
   pagesSitemapQuery,
   projectsSitemapQuery,
+  sitemapQuery,
 } from '@/sanity/lib/queries';
 import { TSitemap } from '@/types';
 import { WEBSITE_HOST_URL } from '@/lib/constants';
@@ -47,10 +48,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     return sanityFetchToSitemap(res);
   });
 
+  const services = await sanityFetch<TSitemap[]>({
+    query: sitemapQuery('service'),
+    tags: ['services'],
+  }).then((res) => {
+    return sanityFetchToSitemap(res);
+  });
+
   return [
     { url: `${WEBSITE_HOST_URL}/`, lastModified: home?._updatedAt },
     ...pages,
     ...projects,
     ...blog,
+    ...services,
   ];
 }

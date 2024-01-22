@@ -1,3 +1,4 @@
+import CustomPortableText from '@/components/shared/custom-portable-text.component';
 import Photo from '@/components/shared/photo.component';
 import { cn } from '@/lib/utils';
 import { TLayoutModule } from '@/types';
@@ -11,7 +12,9 @@ export default function ImageTextLayout({
       <div className="container my-20 grid items-center gap-2 sm:grid-cols-2 sm:gap-8">
         <div className="space-y-2">
           {heading ? <h2>{heading}</h2> : null}
-          {imageTextCard?.text ? <p>{imageTextCard.text}</p> : null}
+          <div className="prose prose-invert">
+            <CustomPortableText value={imageTextCard?.copy} />
+          </div>
         </div>
         {imageTextCard?.image ? (
           <figure

@@ -30,5 +30,4 @@ export default defineField({
       icon: Table,
     }),
   ],
-  group: 'content',
 });

@@ -80,7 +80,7 @@ export type THeroModule = TBaseModule & {
 export type TCard = {
   _key?: string;
   heading?: string;
-  text?: string;
+  copy?: PortableTextBlock[];
   image?: TImage;
   cta?: TNavLink;
 };
