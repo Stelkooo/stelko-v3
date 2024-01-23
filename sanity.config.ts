@@ -10,6 +10,7 @@ import { presentationTool } from 'sanity/presentation';
 import { apiVersion, dataset, projectId } from './sanity/env';
 import schema from './sanity/schemas';
 import structure from './sanity/desk';
+import { defaultDocumentNode } from './sanity/desk/document-default-node';
 import { locate } from './sanity/presentation/locate';
 
 const devOnlyPlugins = [visionTool({ defaultApiVersion: apiVersion })];
@@ -23,7 +24,7 @@ export default defineConfig({
   schema,
 
   plugins: [
-    deskTool({ structure }),
+    deskTool({ structure, defaultDocumentNode }),
     codeInput(),
     table(),
     media(),
