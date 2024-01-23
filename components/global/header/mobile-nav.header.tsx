@@ -1,5 +1,7 @@
-import { Menu } from 'lucide-react';
+'use client';
 
+import { Menu } from 'lucide-react';
+import { useToggle } from 'usehooks-ts';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { THeader } from '@/types';
@@ -11,9 +13,11 @@ type Props = {
 };
 
 export default function MobileNavHeader({ header }: Props) {
+  const [open, toggleOpen, setOpen] = useToggle(false);
+
   return (
     <div className="md:hidden">
-      <Sheet>
+      <Sheet open={open} onOpenChange={setOpen}>
         <div className="flex items-center justify-between gap-2">
           {header?.cta ? (
             <Button className="w-full" asChild>
@@ -35,8 +39,8 @@ export default function MobileNavHeader({ header }: Props) {
             </SheetTrigger>
           </Button>
         </div>
-        <SheetContent>
-          <Nav navLinks={header?.navLinks} isVertical />
+        <SheetContent className="overflow-hidden py-20">
+          <Nav navLinks={header?.navLinks} isVertical setOpen={toggleOpen} />
         </SheetContent>
       </Sheet>
     </div>

@@ -11,18 +11,27 @@ import {
 } from '../ui/navigation-menu';
 import { cn } from '@/lib/utils';
 
-type Props = { navLinks?: TNavLink[]; isVertical?: boolean };
+type Props = {
+  navLinks?: TNavLink[];
+  isVertical?: boolean;
+  setOpen?: () => void;
+};
 
-export default function Nav({ navLinks, isVertical = false }: Props) {
+export default function Nav({ navLinks, isVertical = false, setOpen }: Props) {
   return navLinks ? (
     <NavigationMenu>
       <NavigationMenuList
-        className={cn({ 'flex-col gap-4 space-x-0': isVertical })}
+        className={cn({
+          'flex-col items-start gap-4 space-x-0': isVertical,
+        })}
       >
         {navLinks.map((navLink) => (
           <NavigationMenuItem key={navLink?._key}>
             <SiteLink link={navLink?.link} legacyBehaviour passHref>
-              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+              <NavigationMenuLink
+                className={navigationMenuTriggerStyle()}
+                onClick={setOpen}
+              >
                 <span className={cn({ 'text-4xl': isVertical })}>
                   {navLink?.title}
                 </span>
