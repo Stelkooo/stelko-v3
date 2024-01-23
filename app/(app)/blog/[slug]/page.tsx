@@ -30,7 +30,7 @@ export async function generateMetadata({
     title: seo.seoAndSocial?.title,
     description: seo.seoAndSocial?.description,
     alternates: {
-      canonical: '/',
+      canonical: `/blog/${params.slug}`,
     },
     robots: {
       index: seo.publishStatus === 'hidden' ? false : undefined,
