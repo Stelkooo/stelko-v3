@@ -4,7 +4,11 @@ import { Metadata } from 'next';
 import dynamic from 'next/dynamic';
 
 import ServicePage from '@/components/pages/service/service.page';
-import { serviceQuery, serviceSeoQuery } from '@/sanity/lib/queries';
+import {
+  serviceQuery,
+  serviceSeoQuery,
+  slugsQuery,
+} from '@/sanity/lib/queries';
 import { loadQuery } from '@/sanity/lib/store';
 import { TSeo, TService } from '@/types';
 import { sanityFetch } from '@/sanity/lib/fetch';
@@ -36,6 +40,15 @@ export async function generateMetadata({
       index: seo.publishStatus === 'hidden' ? false : undefined,
     },
   };
+}
+
+export async function generateStaticParams() {
+  const pages = await sanityFetch<string[]>({
+    query: slugsQuery('service'),
+    tags: ['services'],
+  });
+
+  return pages.map((slug) => ({ slug }));
 }
 
 export default async function Page({ params }: { params: { slug: string } }) {

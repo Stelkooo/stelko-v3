@@ -5,7 +5,7 @@ import dynamic from 'next/dynamic';
 
 import SlugPage from '@/components/pages/slug/slug.page';
 import { sanityFetch } from '@/sanity/lib/fetch';
-import { pageQuery, pageSeoQuery } from '@/sanity/lib/queries';
+import { pageQuery, pageSeoQuery, slugsQuery } from '@/sanity/lib/queries';
 import { TPage, TSeo } from '@/types';
 import { loadQuery } from '@/sanity/lib/store';
 
@@ -36,6 +36,15 @@ export async function generateMetadata({
       index: seo.publishStatus === 'hidden' ? false : undefined,
     },
   };
+}
+
+export async function generateStaticParams() {
+  const pages = await sanityFetch<string[]>({
+    query: slugsQuery('page'),
+    tags: ['pages'],
+  });
+
+  return pages.map((slug) => ({ slug }));
 }
 
 export default async function Page({ params }: { params: { slug: string } }) {

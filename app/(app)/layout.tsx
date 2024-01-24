@@ -26,7 +26,11 @@ export default async function Layout({
 }: {
   children: React.ReactNode;
 }) {
-  const site = await sanityFetch<TSite>({ query: siteQuery, tags: ['site'] });
+  const site = await sanityFetch<TSite>({
+    query: siteQuery,
+    tags: ['site'],
+    isDraftMode: draftMode().isEnabled,
+  });
 
   return (
     <>
