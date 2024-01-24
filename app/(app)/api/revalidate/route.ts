@@ -45,23 +45,15 @@ export async function POST(req: NextRequest) {
       tagsToRevalidate.push('home');
     } else if (body._type === 'page') {
       tagsToRevalidate.push(`page:${body?.slug?.current}`);
-    } else if (
-      [
-        'reusableModule',
-        'tag',
-        'tech',
-        'blog',
-        'project',
-        'service',
-        'testimonial',
-      ].includes(body._type)
-    ) {
+    } else if (['reusableModule', 'tag', 'tech'].includes(body._type)) {
       const references = await getReferences(body._id);
       tagsToRevalidate.push(...references);
     } else if (['project', 'service', 'testimonial'].includes(body._type)) {
       tagsToRevalidate.push(`page:${body._type}s`);
     } else if (body._type === 'blog') {
       tagsToRevalidate.push('page:blog');
+    } else if (['header', 'footer', 'general'].includes(body._type)) {
+      tagsToRevalidate.push('site');
     }
 
     tagsToRevalidate.forEach((tag) => revalidateTag(tag));
