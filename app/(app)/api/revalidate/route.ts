@@ -1,6 +1,21 @@
 import { revalidateTag } from 'next/cache';
 import { type NextRequest, NextResponse } from 'next/server';
 import { parseBody } from 'next-sanity/webhook';
+import { groq } from 'next-sanity';
+import { client } from '@/sanity/lib/client';
+
+async function getReferences(id: string) {
+  const referencesQuery = groq`*[_id == "${id}" || references("${id}")] { _type, slug }`;
+  const references: { _type: string; slug?: { current?: string } }[] =
+    await client.fetch(referencesQuery);
+
+  if (!references) return [];
+
+  return references.map(
+    (reference) =>
+      `${reference._type}${reference?.slug ? `:${reference.slug.current}` : ''}`
+  );
+}
 
 // eslint-disable-next-line import/prefer-default-export
 export async function POST(req: NextRequest) {
@@ -8,6 +23,7 @@ export async function POST(req: NextRequest) {
     const { isValidSignature, body } = await parseBody<{
       _type: string;
       slug?: { current?: string };
+      _id: string;
     }>(req, process.env.SANITY_REVALIDATE_SECRET);
 
     if (!isValidSignature) {
@@ -23,16 +39,34 @@ export async function POST(req: NextRequest) {
     }
 
     // All `client.fetch` calls with `{next: {tags: [_type]}}` will be revalidated
-    if (['footer', 'general', 'header'].includes(body._type)) {
-      revalidateTag('site');
-    } else {
-      revalidateTag(
-        `${body._type}${body?.slug ? `:${body.slug?.current}` : ''}`
-      );
+    const tagsToRevalidate: string[] = [];
+
+    if (body._type === 'home') {
+      tagsToRevalidate.push('home');
+    } else if (body._type === 'page') {
+      tagsToRevalidate.push(`page:${body?.slug?.current}`);
+    } else if (
+      [
+        'reusableModule',
+        'tag',
+        'tech',
+        'blog',
+        'project',
+        'service',
+        'testimonial',
+      ].includes(body._type)
+    ) {
+      const references = await getReferences(body._id);
+      tagsToRevalidate.push(...references);
+    } else if (['project', 'service', 'testimonial'].includes(body._type)) {
+      tagsToRevalidate.push(`page:${body._type}s`);
+    } else if (body._type === 'blog') {
+      tagsToRevalidate.push('page:blog');
     }
-    console.log(
-      `Revalidated ${body._type}${body?.slug ? `:${body.slug?.current}` : ''}`
-    );
+
+    tagsToRevalidate.forEach((tag) => revalidateTag(tag));
+
+    console.log('Tags revalidated: ', tagsToRevalidate.join(', '));
 
     return NextResponse.json({
       status: 200,
