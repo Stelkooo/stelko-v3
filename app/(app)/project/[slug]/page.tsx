@@ -41,6 +41,7 @@ export async function generateMetadata({
 export default async function Page({ params }: { params: { slug: string } }) {
   const initial = await loadQuery<TProject>(projectQuery, params, {
     perspective: draftMode().isEnabled ? 'previewDrafts' : 'published',
+    next: { tags: ['projects', `project:${params.slug}`, 'site'] },
   });
 
   if (draftMode().isEnabled)
