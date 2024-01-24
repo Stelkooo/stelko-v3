@@ -36,6 +36,7 @@ export default async function Home() {
     {},
     {
       perspective: draftMode().isEnabled ? 'previewDrafts' : 'published',
+      next: { tags: ['home', 'site'] },
     }
   );
 

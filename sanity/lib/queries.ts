@@ -447,6 +447,12 @@ export const sitemapQuery = (type: string) => {
   `;
 };
 
+export const slugsQuery = (type: string) => {
+  return groq`
+    *[_type == "${type}" && defined(slug) && publishStatus == "public"].slug.current
+  `;
+};
+
 export const serviceSeoQuery = groq`
   *[_type == "service" && defined(slug) && slug.current == $slug][0] {
     seoAndSocial,

@@ -4,7 +4,11 @@ import { Metadata } from 'next';
 import dynamic from 'next/dynamic';
 
 import ServicePage from '@/components/pages/service/service.page';
-import { serviceQuery, serviceSeoQuery } from '@/sanity/lib/queries';
+import {
+  serviceQuery,
+  serviceSeoQuery,
+  slugsQuery,
+} from '@/sanity/lib/queries';
 import { loadQuery } from '@/sanity/lib/store';
 import { TSeo, TService } from '@/types';
 import { sanityFetch } from '@/sanity/lib/fetch';
@@ -38,9 +42,19 @@ export async function generateMetadata({
   };
 }
 
+export async function generateStaticParams() {
+  const pages = await sanityFetch<string[]>({
+    query: slugsQuery('service'),
+    tags: ['services'],
+  });
+
+  return pages.map((slug) => ({ slug }));
+}
+
 export default async function Page({ params }: { params: { slug: string } }) {
   const initial = await loadQuery<TService>(serviceQuery, params, {
     perspective: draftMode().isEnabled ? 'previewDrafts' : 'published',
+    next: { tags: ['services', `service:${params.slug}`, 'site'] },
   });
 
   if (draftMode().isEnabled)
