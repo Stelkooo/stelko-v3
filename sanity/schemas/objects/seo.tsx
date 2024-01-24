@@ -28,6 +28,16 @@ export default defineField({
       name: 'ogImage',
       type: 'image',
     }),
+    defineField({
+      name: 'keywords',
+      description: 'Optional and ONLY used in the SEO pane',
+      type: 'string',
+    }),
+    defineField({
+      name: 'synonyms',
+      description: 'Optional and ONLY used in the SEO pane',
+      type: 'string',
+    }),
   ],
   options: {
     collapsible: true,

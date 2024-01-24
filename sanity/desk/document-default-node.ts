@@ -1,5 +1,6 @@
 import { DefaultDocumentNodeResolver } from 'sanity/desk';
 import { SEOPane } from 'sanity-plugin-seo-pane';
+import { SanityDocument } from 'next-sanity';
 
 import resolveHref from '../lib/links';
 
@@ -14,7 +15,9 @@ export const defaultDocumentNode: DefaultDocumentNodeResolver = (
       S.view
         .component(SEOPane)
         .options({
-          url: (doc: { _type?: string; slug?: { current?: string } }) =>
+          keywords: (doc: SanityDocument) => doc?.seoAndSocial?.keywords,
+          synonyms: (doc: SanityDocument) => doc?.seoAndSocial?.synonyms,
+          url: (doc: SanityDocument) =>
             `https://stelko.xyz${resolveHref(doc?._type, doc?.slug?.current)}`,
         })
         .title('SEO'),
