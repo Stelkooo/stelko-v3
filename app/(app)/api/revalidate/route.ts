@@ -5,6 +5,8 @@ import { groq } from 'next-sanity';
 import { client } from '@/sanity/lib/client';
 import resolveHref from '@/sanity/lib/links';
 
+type TRevalidatePath = { slug: string; type?: 'layout' | 'page' };
+
 async function getReferences(id: string) {
   const referencesQuery = groq`
   *[references("${id}")] {
@@ -27,8 +29,7 @@ async function getReferences(id: string) {
 
   return references.flat(2).map((reference) => ({
     slug: `${resolveHref(reference._type, reference.slug?.current)}`,
-    type: 'page',
-  })) as { slug: string; type: 'layout' | 'page' }[];
+  })) as TRevalidatePath[];
 }
 
 // eslint-disable-next-line import/prefer-default-export
@@ -53,17 +54,15 @@ export async function POST(req: NextRequest) {
     }
 
     // All `client.fetch` calls with `{next: {tags: [_type]}}` will be revalidated
-    const pagesToRevalidate: { slug: string; type: 'layout' | 'page' }[] = [];
+    const pagesToRevalidate: TRevalidatePath[] = [];
 
     if (body._type === 'home') {
       pagesToRevalidate.push({
         slug: `${resolveHref(body._type)}`,
-        type: 'page',
       });
     } else if (body._type === 'page') {
       pagesToRevalidate.push({
         slug: `${resolveHref(body._type)}`,
-        type: 'page',
       });
     } else if (['reusableModule', 'tag', 'tech'].includes(body._type)) {
       const references = await getReferences(body._id);
@@ -72,16 +71,14 @@ export async function POST(req: NextRequest) {
       const references = await getReferences(body._id);
       pagesToRevalidate.push(...references, {
         slug: `/${body._type}`,
-        type: 'page',
       });
     } else if (body._type === 'blog') {
       const references = await getReferences(body._id);
       pagesToRevalidate.push(...references, {
         slug: `/${body._type}`,
-        type: 'page',
       });
     } else if (['header', 'footer', 'general'].includes(body._type)) {
-      pagesToRevalidate.push({ slug: `/(app)`, type: 'layout' });
+      pagesToRevalidate.push({ slug: `/`, type: 'layout' });
     }
 
     pagesToRevalidate.forEach(({ slug, type }) => revalidatePath(slug, type));
