@@ -62,7 +62,7 @@ export async function POST(req: NextRequest) {
       });
     } else if (body._type === 'page') {
       pagesToRevalidate.push({
-        slug: `${resolveHref(body._type)}`,
+        slug: `${resolveHref(body._type, body.slug?.current)}`,
       });
     } else if (['reusableModule', 'tag', 'tech'].includes(body._type)) {
       const references = await getReferences(body._id);
@@ -70,12 +70,12 @@ export async function POST(req: NextRequest) {
     } else if (['project', 'service', 'testimonial'].includes(body._type)) {
       const references = await getReferences(body._id);
       pagesToRevalidate.push(...references, {
-        slug: `/${body._type}`,
+        slug: `${resolveHref(body._id, body.slug?.current)}`,
       });
     } else if (body._type === 'blog') {
       const references = await getReferences(body._id);
       pagesToRevalidate.push(...references, {
-        slug: `/${body._type}`,
+        slug: `${resolveHref(body._id, body.slug?.current)}`,
       });
     } else if (['header', 'footer', 'general'].includes(body._type)) {
       pagesToRevalidate.push({ slug: `/`, type: 'layout' });
@@ -83,7 +83,10 @@ export async function POST(req: NextRequest) {
 
     pagesToRevalidate.forEach(({ slug, type }) => revalidatePath(slug, type));
 
-    console.log('Tags revalidated: ', pagesToRevalidate.join(', '));
+    console.log(
+      'Tags revalidated: ',
+      pagesToRevalidate.map((item) => `${item.type}-${item.slug}`).join(', ')
+    );
 
     return NextResponse.json({
       status: 200,
