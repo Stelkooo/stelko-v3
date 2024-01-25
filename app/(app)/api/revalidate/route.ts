@@ -1,20 +1,34 @@
-import { revalidateTag } from 'next/cache';
+import { revalidatePath } from 'next/cache';
 import { type NextRequest, NextResponse } from 'next/server';
 import { parseBody } from 'next-sanity/webhook';
 import { groq } from 'next-sanity';
 import { client } from '@/sanity/lib/client';
+import resolveHref from '@/sanity/lib/links';
 
 async function getReferences(id: string) {
-  const referencesQuery = groq`*[_id == "${id}" || references("${id}")] { _type, slug }`;
+  const referencesQuery = groq`
+  *[references("${id}")] {
+    _type != "reusableModule" => {
+      _type,
+      slug,  
+    },
+    _type == "reusableModule" => {
+      "references": *[references(^._id)] {
+        _type,
+        slug,
+      },
+    },
+  }
+  `;
   const references: { _type: string; slug?: { current?: string } }[] =
     await client.fetch(referencesQuery);
 
   if (!references) return [];
 
-  return references.map(
-    (reference) =>
-      `${reference._type}${reference?.slug ? `:${reference.slug.current}` : ''}`
-  );
+  return references.flat(2).map((reference) => ({
+    slug: `${resolveHref(reference._type, reference.slug?.current)}`,
+    type: 'page',
+  })) as { slug: string; type: 'layout' | 'page' }[];
 }
 
 // eslint-disable-next-line import/prefer-default-export
@@ -39,26 +53,40 @@ export async function POST(req: NextRequest) {
     }
 
     // All `client.fetch` calls with `{next: {tags: [_type]}}` will be revalidated
-    const tagsToRevalidate: string[] = [];
+    const pagesToRevalidate: { slug: string; type: 'layout' | 'page' }[] = [];
 
     if (body._type === 'home') {
-      tagsToRevalidate.push('home');
+      pagesToRevalidate.push({
+        slug: `${resolveHref(body._type)}`,
+        type: 'page',
+      });
     } else if (body._type === 'page') {
-      tagsToRevalidate.push(`page:${body?.slug?.current}`);
+      pagesToRevalidate.push({
+        slug: `${resolveHref(body._type)}`,
+        type: 'page',
+      });
     } else if (['reusableModule', 'tag', 'tech'].includes(body._type)) {
       const references = await getReferences(body._id);
-      tagsToRevalidate.push(...references);
+      pagesToRevalidate.push(...references);
     } else if (['project', 'service', 'testimonial'].includes(body._type)) {
-      tagsToRevalidate.push(`page:${body._type}s`);
+      const references = await getReferences(body._id);
+      pagesToRevalidate.push(...references, {
+        slug: `/${body._type}`,
+        type: 'page',
+      });
     } else if (body._type === 'blog') {
-      tagsToRevalidate.push('page:blog');
+      const references = await getReferences(body._id);
+      pagesToRevalidate.push(...references, {
+        slug: `/${body._type}`,
+        type: 'page',
+      });
     } else if (['header', 'footer', 'general'].includes(body._type)) {
-      tagsToRevalidate.push('site');
+      pagesToRevalidate.push({ slug: `/(app)`, type: 'layout' });
     }
 
-    tagsToRevalidate.forEach((tag) => revalidateTag(tag));
+    pagesToRevalidate.forEach(({ slug, type }) => revalidatePath(slug, type));
 
-    console.log('Tags revalidated: ', tagsToRevalidate.join(', '));
+    console.log('Tags revalidated: ', pagesToRevalidate.join(', '));
 
     return NextResponse.json({
       status: 200,
