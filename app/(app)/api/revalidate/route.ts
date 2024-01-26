@@ -3,7 +3,6 @@ import { parseBody } from 'next-sanity/webhook';
 import { groq } from 'next-sanity';
 import { client } from '@/sanity/lib/client';
 import resolveHref from '@/sanity/lib/links';
-import { WEBSITE_HOST_URL } from '@/lib/constants';
 
 type TRevalidatePath = { slug: string; type?: 'layout' | 'page' };
 
@@ -36,7 +35,7 @@ async function revalidatePaths(paths: TRevalidatePath[]) {
   await Promise.all(
     paths.map(async ({ slug, type }) => {
       await fetch(
-        `${WEBSITE_HOST_URL}/api/revalidate-path?slug=${slug}${
+        `https://stelko.xyz/api/revalidate-path?slug=${slug}${
           type ? `&type=${type}` : ''
         }`
       );
