@@ -1,7 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
 
-'use client';
-
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ControllerRenderProps, useForm } from 'react-hook-form';

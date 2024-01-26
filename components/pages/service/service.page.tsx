@@ -1,17 +1,22 @@
-import { vercelStegaCleanAll } from '@sanity/client/stega';
-
 import ModuleBuilder from '@/components/modules/module-builder.component';
 import { TService } from '@/types';
+import LayoutGlobal from '@/components/global/layout.global';
 
-type Props = { service?: TService };
+type Props = { data?: TService };
 
-export default function ServicePage({ service }: Props) {
-  const serviceCleaned = vercelStegaCleanAll(service);
+export default function ServicePage({ data }: Props) {
+  if (!data) return null;
 
-  return serviceCleaned?.modules
-    ? serviceCleaned.modules.map((module) => {
-        // eslint-disable-next-line react/jsx-props-no-spreading
-        return <ModuleBuilder key={module._key} {...module} />;
-      })
-    : null;
+  const { service, seo, site } = data;
+
+  return (
+    <LayoutGlobal seo={seo} site={site}>
+      {service?.modules
+        ? service.modules.map((module) => {
+            // eslint-disable-next-line react/jsx-props-no-spreading
+            return <ModuleBuilder key={module._key} {...module} />;
+          })
+        : null}
+    </LayoutGlobal>
+  );
 }

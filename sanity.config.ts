@@ -1,6 +1,6 @@
 import { visionTool } from '@sanity/vision';
 import { defineConfig, isDev } from 'sanity';
-import { deskTool } from 'sanity/desk';
+import { structureTool } from 'sanity/structure';
 
 import { codeInput } from '@sanity/code-input';
 import { table } from '@sanity/table';
@@ -24,7 +24,7 @@ export default defineConfig({
   schema,
 
   plugins: [
-    deskTool({ structure, defaultDocumentNode }),
+    structureTool({ structure, defaultDocumentNode }),
     codeInput(),
     table(),
     media(),

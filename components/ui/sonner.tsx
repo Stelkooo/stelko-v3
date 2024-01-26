@@ -1,8 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 /* eslint-disable react/jsx-props-no-spreading */
 
-'use client';
-
 import { useTheme } from 'next-themes';
 import { Toaster as Sonner } from 'sonner';
 

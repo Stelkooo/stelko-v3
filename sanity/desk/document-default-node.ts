@@ -1,4 +1,4 @@
-import { DefaultDocumentNodeResolver } from 'sanity/desk';
+import { DefaultDocumentNodeResolver } from 'sanity/structure';
 import { SEOPane } from 'sanity-plugin-seo-pane';
 import { SanityDocument } from 'next-sanity';
 

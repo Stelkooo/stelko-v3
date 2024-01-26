@@ -1,5 +1,3 @@
-'use client';
-
 import SiteLink from '@/components/shared/site-link.component';
 import { TNavLink } from '@/types';
 import {
