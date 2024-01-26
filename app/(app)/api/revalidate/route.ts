@@ -37,7 +37,8 @@ async function revalidatePaths(paths: TRevalidatePath[]) {
       await fetch(
         `https://stelko.xyz/api/revalidate-path?slug=${slug}${
           type ? `&type=${type}` : ''
-        }`
+        }`,
+        { method: 'POST' }
       );
     })
   );
