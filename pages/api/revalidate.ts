@@ -73,20 +73,28 @@ export default async function handler(
       pagesToRevalidate.push(`${resolveHref(body._type, body.slug?.current)}`);
     } else if (['reusableModule', 'tag', 'tech'].includes(body._type)) {
       const references = await getReferences(body._id);
-      pagesToRevalidate.push(...references);
+      pagesToRevalidate.push(
+        ...references,
+        '/',
+        '/projects',
+        '/blog',
+        '/services'
+      );
     } else if (['project', 'service', 'testimonial'].includes(body._type)) {
       const references = await getReferences(body._id);
       pagesToRevalidate.push(
         ...references,
         `${resolveHref(body._type, body.slug?.current)}`,
-        `/${body._type}s`
+        `/${body._type}s`,
+        '/'
       );
     } else if (body._type === 'blog') {
       const references = await getReferences(body._id);
       pagesToRevalidate.push(
         ...references,
         `${resolveHref(body._type, body.slug?.current)}`,
-        `/${body._type}`
+        `/${body._type}`,
+        '/'
       );
     } else if (['header', 'footer', 'general'].includes(body._type)) {
       pagesToRevalidate.push(`/`);
