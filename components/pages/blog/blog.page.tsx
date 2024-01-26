@@ -1,39 +1,35 @@
-import { vercelStegaCleanAll } from '@sanity/client/stega';
-
+import LayoutGlobal from '@/components/global/layout.global';
 import HeroModule from '@/components/modules/hero/hero.module';
 import ModuleBuilder from '@/components/modules/module-builder.component';
 import ContextTable from '@/components/shared/context-table.component';
 import CustomPortableText from '@/components/shared/custom-portable-text.component';
 import { getDateFormatted } from '@/lib/utils';
-import { TBlog } from '@/types';
+import { TBlogPayload } from '@/types';
 
-type Props = { blog?: TBlog };
+type Props = { data?: TBlogPayload };
 
-export default function BlogPage({ blog }: Props) {
-  const blogCleaned = vercelStegaCleanAll(blog);
+export default function BlogPage({ data }: Props) {
+  if (!data) return null;
 
-  const date = blogCleaned?.datePublished
-    ? getDateFormatted(blogCleaned.datePublished)
-    : '';
+  const { blog, seo, site } = data;
+
+  const date = blog?.datePublished ? getDateFormatted(blog.datePublished) : '';
 
   return (
-    <>
+    <LayoutGlobal seo={seo} site={site}>
       <HeroModule
-        heading={blogCleaned?.title}
-        image={blogCleaned?.thumbnail}
-        tags={blogCleaned?.tags}
+        heading={blog?.title}
+        image={blog?.thumbnail}
+        tags={blog?.tags}
       />
       <div className="container grid items-start gap-16 px-6 py-8">
         <div className="grid items-center gap-8 text-xl sm:grid-cols-2">
           <span
             className="sr-only"
             itemProp="dateModified"
-            content={`${blogCleaned?.datePublished}`}
+            content={`${blog?.datePublished}`}
           />
-          <time
-            itemProp="datePublished"
-            content={`${blogCleaned?.datePublished}`}
-          >
+          <time itemProp="datePublished" content={`${blog?.datePublished}`}>
             {date}
           </time>
           <span
@@ -51,23 +47,23 @@ export default function BlogPage({ blog }: Props) {
           <div className="flex flex-col space-y-4 lg:sticky lg:top-32">
             <h2>Contents</h2>
             <ul className="flex flex-col gap-4 text-xl">
-              {blogCleaned?.copy?.filter((item) => item.style === 'h2') && (
+              {blog?.copy?.filter((item) => item.style === 'h2') && (
                 <ContextTable
-                  value={blogCleaned.copy.filter((item) => item.style === 'h2')}
+                  value={blog.copy.filter((item) => item.style === 'h2')}
                 />
               )}
             </ul>
           </div>
           <div className="prose prose-xl prose-invert text-primary-foreground lg:prose-2xl prose-figcaption:text-primary-foreground prose-table:bg-secondary-foreground prose-td:pl-[0.6em]">
-            <CustomPortableText value={blogCleaned?.copy} />
+            <CustomPortableText value={blog?.copy} />
           </div>
         </div>
       </div>
-      {blogCleaned?.modules &&
-        blogCleaned.modules.map((module) => {
+      {blog?.modules &&
+        blog.modules.map((module) => {
           // eslint-disable-next-line react/jsx-props-no-spreading
           return <ModuleBuilder key={module._key} {...module} />;
         })}
-    </>
+    </LayoutGlobal>
   );
 }

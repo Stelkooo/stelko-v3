@@ -1,5 +1,3 @@
-'use client';
-
 import { createClient } from 'next-sanity';
 import { useNextSanityImage } from 'next-sanity-image';
 import Image from 'next/image';

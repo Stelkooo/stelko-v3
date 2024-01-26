@@ -1,8 +1,6 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react/jsx-props-no-spreading */
 
-'use client';
-
 import { Highlight, themes } from 'prism-react-renderer';
 
 import { TCodeBlock } from '@/types';

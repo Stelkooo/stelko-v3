@@ -57,6 +57,8 @@ export type TSeo = {
     ogImage?: TImage;
   };
   publishStatus?: 'hidden' | 'public';
+  _type?: string;
+  slug?: Slug;
 };
 
 export type TSitemap = {
@@ -158,6 +160,7 @@ export type TProject = {
   description?: string;
   tags?: TTag[];
   tech?: TTech[];
+  seo?: TSeo;
 };
 
 export type TProjectModule = TBaseModule & {
@@ -195,6 +198,7 @@ export type TBlog = {
   tags?: TTag[];
   modules?: TModules;
   copy?: PortableTextBlock[];
+  seo?: TSeo;
 };
 
 export type TTable = {
@@ -243,13 +247,6 @@ export type TRedirect = {
   destination?: { _type?: string; slug?: Slug };
 };
 
-export type TService = {
-  _id?: string;
-  slug?: Slug;
-  title?: string;
-  modules?: TModules;
-};
-
 export type TModules = (
   | THeroModule
   | TLayoutModule
@@ -264,10 +261,36 @@ export type TModules = (
 )[];
 
 export type THome = {
-  modules?: TModules;
+  home?: { modules?: TModules };
+  site?: TSite;
+  seo?: TSeo;
 };
 
 export type TPage = {
-  slug?: Slug;
-  modules?: TModules;
+  page?: { slug?: Slug; modules?: TModules };
+  site?: TSite;
+  seo?: TSeo;
+};
+
+export type TService = {
+  service?: {
+    _id?: string;
+    slug?: Slug;
+    title?: string;
+    modules?: TModules;
+  };
+  site?: TSite;
+  seo?: TSeo;
+};
+
+export type TProjectPayload = {
+  project?: TProject;
+  site?: TSite;
+  seo?: TSeo;
+};
+
+export type TBlogPayload = {
+  blog?: TBlog;
+  site?: TSite;
+  seo?: TSeo;
 };

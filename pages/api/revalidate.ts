@@ -1,10 +1,9 @@
-import { type NextRequest, NextResponse } from 'next/server';
+import { NextApiRequest, NextApiResponse } from 'next';
 import { parseBody } from 'next-sanity/webhook';
 import { groq } from 'next-sanity';
-import { client } from '@/sanity/lib/client';
-import resolveHref from '@/sanity/lib/links';
 
-type TRevalidatePath = { slug: string; type?: 'layout' | 'page' };
+import resolveHref from '@/sanity/lib/links';
+import { getClient } from '@/sanity/lib/client';
 
 async function getReferences(id: string) {
   const referencesQuery = groq`
@@ -22,30 +21,30 @@ async function getReferences(id: string) {
   }
   `;
   const references: { _type: string; slug?: { current?: string } }[] =
-    await client.fetch(referencesQuery);
+    await getClient().fetch(referencesQuery);
 
   if (!references) return [];
 
-  return references.flat(2).map((reference) => ({
-    slug: `${resolveHref(reference._type, reference.slug?.current)}`,
-  })) as TRevalidatePath[];
+  return references
+    .flat(2)
+    .map(
+      (reference) => `${resolveHref(reference._type, reference.slug?.current)}`
+    ) as string[];
 }
 
-async function revalidatePaths(paths: TRevalidatePath[]) {
+async function revalidatePaths(res: NextApiResponse, paths: string[]) {
   await Promise.all(
-    paths.map(async ({ slug, type }) => {
-      await fetch(
-        `https://stelko.xyz/api/revalidate-path?slug=${slug}${
-          type ? `&type=${type}` : ''
-        }`,
-        { method: 'POST' }
-      );
+    paths.map(async (path) => {
+      await res.revalidate(path);
     })
   );
 }
 
-// eslint-disable-next-line import/prefer-default-export
-export async function POST(req: NextRequest) {
+// eslint-disable-next-line consistent-return
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   try {
     const { isValidSignature, body } = await parseBody<{
       _type: string;
@@ -65,17 +64,12 @@ export async function POST(req: NextRequest) {
       return new Response(JSON.stringify({ message, body }), { status: 400 });
     }
 
-    // All `client.fetch` calls with `{next: {tags: [_type]}}` will be revalidated
-    const pagesToRevalidate: TRevalidatePath[] = [];
+    const pagesToRevalidate: string[] = [];
 
     if (body._type === 'home') {
-      pagesToRevalidate.push({
-        slug: `${resolveHref(body._type)}`,
-      });
+      pagesToRevalidate.push(`${resolveHref(body._type)}`);
     } else if (body._type === 'page') {
-      pagesToRevalidate.push({
-        slug: `${resolveHref(body._type, body.slug?.current)}`,
-      });
+      pagesToRevalidate.push(`${resolveHref(body._type, body.slug?.current)}`);
     } else if (['reusableModule', 'tag', 'tech'].includes(body._type)) {
       const references = await getReferences(body._id);
       pagesToRevalidate.push(...references);
@@ -83,37 +77,26 @@ export async function POST(req: NextRequest) {
       const references = await getReferences(body._id);
       pagesToRevalidate.push(
         ...references,
-        {
-          slug: `${resolveHref(body._type, body.slug?.current)}`,
-        },
-        { slug: `/${body._type}s` }
+        `${resolveHref(body._type, body.slug?.current)}`,
+        `/${body._type}s`
       );
     } else if (body._type === 'blog') {
       const references = await getReferences(body._id);
       pagesToRevalidate.push(
         ...references,
-        {
-          slug: `${resolveHref(body._type, body.slug?.current)}`,
-        },
-        { slug: `/${body._type}` }
+        `${resolveHref(body._type, body.slug?.current)}`,
+        `/${body._type}`
       );
     } else if (['header', 'footer', 'general'].includes(body._type)) {
-      pagesToRevalidate.push({ slug: `/`, type: 'layout' });
+      pagesToRevalidate.push(`/`);
     }
 
-    revalidatePaths(pagesToRevalidate);
+    await revalidatePaths(res, pagesToRevalidate);
 
-    return NextResponse.json({
-      status: 200,
-      revalidated: true,
-      now: Date.now(),
-      body,
-    });
+    return res.status(200).json({ body });
   } catch (err: unknown) {
     console.error(err);
-    if (err instanceof Error) {
-      return new Response(err.message, { status: 500 });
-    }
-    return new Response('Error', { status: 500 });
+    if (err instanceof Error)
+      return res.status(500).json({ message: err.message });
   }
 }

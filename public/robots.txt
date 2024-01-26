@@ -1,0 +1,5 @@
+User-Agent: *
+Allow: /
+Disallow: /studio/
+
+Sitemap: https://stelko.xyz/sitemap.xml/

@@ -293,18 +293,30 @@ const fullModuleQuery = groq`
   }
 `;
 
-export const homeQuery = groq`
-  *[_type == "home" && _id == "home"][0] {
-    modules[] {
-      ${fullModuleQuery},
-    },
-  }
+export const seoQuery = groq`
+  seoAndSocial {
+    description,
+    title,
+  },
+  _type,
+  slug,
+  publishStatus
 `;
 
-export const homeSeoQuery = groq`
-  *[_type == "home" && _id == "home"][0] {
-    seoAndSocial,
-    publishStatus,
+export const homeQuery = groq`
+  {
+    "home": *[_type == "home" && _id == "home"][0] {
+      modules[] {
+        ${fullModuleQuery},
+      },
+    },
+    "site": {
+      ${headerQuery},
+      ${footerQuery},
+    },
+    "seo": *[_type == "home" && _id == "home"][0] {
+      ${seoQuery},
+    },
   }
 `;
 
@@ -315,124 +327,115 @@ export const homeSitemapQuery = groq`
 `;
 
 export const projectQuery = groq`
-  *[_type == "project" && defined(slug) && slug.current == $slug][0] {
-    slug,
-    title,
-    description,
-    thumbnail {
-      ${imageQuery},
-    },
-    tags[] {
-      _key,
-      ...@-> {
-        name,
-      },
-    },
-    modules[] {
-      ${fullModuleQuery},
-    },
-    tech[]-> {
-      _id,
-      name,
-      image {
+  {
+    "project": *[_type == "project" && defined(slug) && slug.current == $slug][0] {
+      slug,
+      title,
+      description,
+      thumbnail {
         ${imageQuery},
       },
-      category,
+      tags[] {
+        _key,
+        ...@-> {
+          name,
+        },
+      },
+      modules[] {
+        ${fullModuleQuery},
+      },
+      tech[]-> {
+        _id,
+        name,
+        image {
+          ${imageQuery},
+        },
+        category,
+      },
     },
-  }
-`;
-
-export const projectsSitemapQuery = groq`
-  *[_type == "project" && defined(slug)] {
-    _updatedAt,
-    _type,
-    slug,
-  }
-`;
-
-export const projectSeoQuery = groq`
-  *[_type == "project" && defined(slug) && slug.current == $slug][0] {
-    seoAndSocial,
-    publishStatus,
+    "site": {
+      ${headerQuery},
+      ${footerQuery},
+    },
+    "seo": *[_type == "project" && defined(slug) && slug.current == $slug][0] {
+      ${seoQuery},
+    },
   }
 `;
 
 export const pageQuery = groq`
-  *[_type == 'page' && defined(slug) && slug.current == $slug][0] {
-    slug,
-    modules[] {
-      ${fullModuleQuery},
+  {
+    "page": *[_type == "page" && defined(slug) && slug.current == $slug][0] {
+      slug,
+      modules[] {
+        ${fullModuleQuery},
+      },
     },
-  }
-`;
-
-export const pagesSitemapQuery = groq`
-  *[_type == "page" && defined(slug)] {
-    _updatedAt,
-    _type,
-    slug,
-  }
-`;
-
-export const pageSeoQuery = groq`
-  *[_type == "page" && defined(slug) && slug.current == $slug][0] {
-    seoAndSocial,
-    publishStatus,
+    "site": {
+      ${headerQuery},
+      ${footerQuery},
+    },
+    "seo": *[_type == "page" && defined(slug) && slug.current == $slug][0] {
+      ${seoQuery},
+    },
   }
 `;
 
 export const blogQuery = groq`
-  *[_type == 'blog' && defined(slug) && slug.current == $slug][0] {
-    slug,
-    title,
-    thumbnail {
-      ${imageQuery},
-    },
-    tags[] {
-      _key,
-      ...@-> {
-        name,
-      },
-    },
-    copy[] {
-      ...,
-      markDefs[] {
-        ...,
-        _type == 'link' => {
-          ${linkQuery},
-        },
-      },
-      _type == "customImage" => {
+  {
+    "blog": *[_type == "blog" && defined(slug) && slug.current == $slug][0] {
+      slug,
+      title,
+      thumbnail {
         ${imageQuery},
       },
+      tags[] {
+        _key,
+        ...@-> {
+          name,
+        },
+      },
+      copy[] {
+        ...,
+        markDefs[] {
+          ...,
+          _type == 'link' => {
+            ${linkQuery},
+          },
+        },
+        _type == "customImage" => {
+          ${imageQuery},
+        },
+      },
+      datePublished,
+      modules[] {
+        ${fullModuleQuery},
+      },
     },
-    datePublished,
-    modules[] {
-      ${fullModuleQuery},
+    "site": {
+      ${headerQuery},
+      ${footerQuery},
     },
-  }
-`;
-
-export const blogSitemapQuery = groq`
-  *[_type == "blog" && defined(slug)] {
-    _updatedAt,
-    _type,
-    slug,
-  }
-`;
-
-export const blogSeoQuery = groq`
-  *[_type == "blog" && defined(slug) && slug.current == $slug][0] {
-    seoAndSocial,
-    publishStatus,
+    "seo": *[_type == "blog" && defined(slug) && slug.current == $slug][0] {
+      ${seoQuery},
+    },
   }
 `;
 
 export const serviceQuery = groq`
-  *[_type == 'service' && defined(slug) && slug.current == $slug][0] {
-    slug,
-    modules[] {
-      ${fullModuleQuery},
+  {
+    "service": *[_type == "service" && defined(slug) && slug.current == $slug][0] {
+      slug,
+      modules[] {
+        ${fullModuleQuery},
+      },
+    },
+    "site": {
+      ${headerQuery},
+      ${footerQuery},
+    },
+    "seo": *[_type == "service" && defined(slug) && slug.current == $slug][0] {
+      ${seoQuery},
     },
   }
 `;
@@ -452,13 +455,6 @@ export const slugsQuery = (type: string) => {
     *[_type == "${type}" && defined(slug) && publishStatus == "public"].slug.current
   `;
 };
-
-export const serviceSeoQuery = groq`
-  *[_type == "service" && defined(slug) && slug.current == $slug][0] {
-    seoAndSocial,
-    publishStatus,
-  }
-`;
 
 export const redirectsQuery = groq`
   *[_type == 'general' && _id == 'general'][0] {

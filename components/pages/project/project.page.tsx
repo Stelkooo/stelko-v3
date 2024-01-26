@@ -1,28 +1,29 @@
-import { vercelStegaCleanAll } from '@sanity/client/stega';
-
+import LayoutGlobal from '@/components/global/layout.global';
 import HeroModule from '@/components/modules/hero/hero.module';
 import ModuleBuilder from '@/components/modules/module-builder.component';
-import { TProject } from '@/types';
+import { TProjectPayload } from '@/types';
 
-type Props = { project?: TProject };
+type Props = { data?: TProjectPayload };
 
-export default function ProjectPage({ project }: Props) {
-  const projectCleaned = vercelStegaCleanAll(project);
+export default function ProjectPage({ data }: Props) {
+  if (!data) return null;
+
+  const { project, seo, site } = data;
 
   return (
-    <>
+    <LayoutGlobal seo={seo} site={site}>
       <HeroModule
-        heading={projectCleaned?.title}
-        subheading={projectCleaned?.description}
-        image={projectCleaned?.thumbnail}
-        tags={projectCleaned?.tags}
+        heading={project?.title}
+        subheading={project?.description}
+        image={project?.thumbnail}
+        tags={project?.tags}
       />
-      {projectCleaned?.modules
-        ? projectCleaned.modules.map((module) => {
+      {project?.modules
+        ? project.modules.map((module) => {
             // eslint-disable-next-line react/jsx-props-no-spreading
             return <ModuleBuilder key={module._key} {...module} />;
           })
         : null}
-    </>
+    </LayoutGlobal>
   );
 }

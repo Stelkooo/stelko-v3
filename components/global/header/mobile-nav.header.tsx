@@ -1,5 +1,3 @@
-'use client';
-
 import { Menu } from 'lucide-react';
 import { useToggle } from 'usehooks-ts';
 import { Button } from '@/components/ui/button';
