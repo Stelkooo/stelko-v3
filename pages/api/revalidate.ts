@@ -40,7 +40,6 @@ async function revalidatePaths(res: NextApiResponse, paths: string[]) {
   );
 }
 
-// eslint-disable-next-line consistent-return
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -54,14 +53,14 @@ export default async function handler(
 
     if (!isValidSignature) {
       const message = 'Invalid signature';
-      return new Response(JSON.stringify({ message, isValidSignature, body }), {
-        status: 401,
-      });
+      res.status(401).json({ message, isValidSignature, body });
+      return;
     }
 
     if (!body?._type) {
       const message = 'Bad Request';
-      return new Response(JSON.stringify({ message, body }), { status: 400 });
+      res.status(400).json({ message, body });
+      return;
     }
 
     const pagesToRevalidate: string[] = [];
@@ -93,10 +92,10 @@ export default async function handler(
 
     await revalidatePaths(res, pagesToRevalidate);
 
-    return res.status(200).json({ body });
+    res.status(200).json({ body });
+    return;
   } catch (err: unknown) {
     console.error(err);
-    if (err instanceof Error)
-      return res.status(500).json({ message: err.message });
+    if (err instanceof Error) res.status(500).json({ message: err.message });
   }
 }
