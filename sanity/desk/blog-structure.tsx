@@ -1,4 +1,4 @@
-import { ListItemBuilder } from 'sanity/desk';
+import { ListItemBuilder } from 'sanity/structure';
 import { BookCopy } from 'lucide-react';
 
 import defineStructure from '../utils/define-structure';

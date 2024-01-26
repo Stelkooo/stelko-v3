@@ -1,4 +1,4 @@
-import { ListItemBuilder, StructureResolver } from 'sanity/desk';
+import { ListItemBuilder, StructureResolver } from 'sanity/structure';
 
 import pagesStructure from './pages-structure';
 import blogStructure from './blog-structure';
