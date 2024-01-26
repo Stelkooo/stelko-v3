@@ -5,6 +5,8 @@ import { groq } from 'next-sanity';
 import resolveHref from '@/sanity/lib/links';
 import { getClient } from '@/sanity/lib/client';
 
+export { config } from 'next-sanity/webhook';
+
 async function getReferences(id: string) {
   const referencesQuery = groq`
   *[references("${id}")] {
