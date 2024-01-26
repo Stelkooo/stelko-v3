@@ -1,9 +1,9 @@
-import { revalidatePath } from 'next/cache';
 import { type NextRequest, NextResponse } from 'next/server';
 import { parseBody } from 'next-sanity/webhook';
 import { groq } from 'next-sanity';
 import { client } from '@/sanity/lib/client';
 import resolveHref from '@/sanity/lib/links';
+import { WEBSITE_HOST_URL } from '@/lib/constants';
 
 type TRevalidatePath = { slug: string; type?: 'layout' | 'page' };
 
@@ -30,6 +30,18 @@ async function getReferences(id: string) {
   return references.flat(2).map((reference) => ({
     slug: `${resolveHref(reference._type, reference.slug?.current)}`,
   })) as TRevalidatePath[];
+}
+
+async function revalidatePaths(paths: TRevalidatePath[]) {
+  await Promise.all(
+    paths.map(async ({ slug, type }) => {
+      await fetch(
+        `${WEBSITE_HOST_URL}/api/revalidate-path?slug=${slug}${
+          type ? `&type=${type}` : ''
+        }`
+      );
+    })
+  );
 }
 
 // eslint-disable-next-line import/prefer-default-export
@@ -69,24 +81,27 @@ export async function POST(req: NextRequest) {
       pagesToRevalidate.push(...references);
     } else if (['project', 'service', 'testimonial'].includes(body._type)) {
       const references = await getReferences(body._id);
-      pagesToRevalidate.push(...references, {
-        slug: `${resolveHref(body._id, body.slug?.current)}`,
-      });
+      pagesToRevalidate.push(
+        ...references,
+        {
+          slug: `${resolveHref(body._type, body.slug?.current)}`,
+        },
+        { slug: `/${body._type}s` }
+      );
     } else if (body._type === 'blog') {
       const references = await getReferences(body._id);
-      pagesToRevalidate.push(...references, {
-        slug: `${resolveHref(body._id, body.slug?.current)}`,
-      });
+      pagesToRevalidate.push(
+        ...references,
+        {
+          slug: `${resolveHref(body._type, body.slug?.current)}`,
+        },
+        { slug: `/${body._type}` }
+      );
     } else if (['header', 'footer', 'general'].includes(body._type)) {
       pagesToRevalidate.push({ slug: `/`, type: 'layout' });
     }
 
-    pagesToRevalidate.forEach(({ slug, type }) => revalidatePath(slug, type));
-
-    console.log(
-      'Tags revalidated: ',
-      pagesToRevalidate.map((item) => `${item.type}-${item.slug}`).join(', ')
-    );
+    revalidatePaths(pagesToRevalidate);
 
     return NextResponse.json({
       status: 200,
