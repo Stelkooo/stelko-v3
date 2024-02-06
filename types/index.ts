@@ -54,7 +54,7 @@ export type TSeo = {
   seoAndSocial?: {
     title?: string;
     description?: string;
-    ogImage?: TImage;
+    ogImage?: string;
   };
   publishStatus?: 'hidden' | 'public';
   _type?: string;

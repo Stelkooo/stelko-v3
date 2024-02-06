@@ -295,8 +295,13 @@ const fullModuleQuery = groq`
 
 export const seoQuery = groq`
   seoAndSocial {
-    description,
-    title,
+    ...,
+    defined(ogImage) => {
+      "ogImage": ogImage.asset->url
+    },
+    !defined(ogImage) => {
+      "ogImage": *[_type == 'general'][0].ogImage.asset->url
+    }
   },
   _type,
   slug,

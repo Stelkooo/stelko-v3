@@ -22,6 +22,7 @@ export default defineType({
       ],
     }),
     defineField({ name: 'socials', type: 'socials' }),
+    defineField({ name: 'ogImage', type: 'customImage' }),
     defineField({
       name: 'redirects',
       type: 'array',
