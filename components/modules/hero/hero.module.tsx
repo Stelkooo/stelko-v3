@@ -8,7 +8,8 @@ export default function HeroModule({
   image,
   subheading,
   tags,
-}: THeroModule) {
+  smallerText,
+}: THeroModule & { smallerText?: boolean }) {
   return (
     <section>
       <div
@@ -26,7 +27,11 @@ export default function HeroModule({
             loading="eager"
           />
         ) : null}
-        {heading ? <h1 className="relative">{heading}</h1> : null}
+        {heading ? (
+          <h1 className={cn({ relative: true, 'as-h2': smallerText === true })}>
+            {heading}
+          </h1>
+        ) : null}
         {subheading ? (
           <p className="as-h4 relative sm:max-w-[60%]">{subheading}</p>
         ) : null}

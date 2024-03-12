@@ -21,6 +21,7 @@ export default function BlogPage({ data }: Props) {
         heading={blog?.title}
         image={blog?.thumbnail}
         tags={blog?.tags}
+        smallerText
       />
       <div className="container grid items-start gap-16 px-6 py-8">
         <div className="grid items-center gap-8 text-xl sm:grid-cols-2">
